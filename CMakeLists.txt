@@ -3,4 +3,4 @@ project(DA_PROJECT1)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(DA_PROJECT1 main.cpp)
+add_executable(DA_PROJECT1 main.cpp Interface.cpp Interface.h)
