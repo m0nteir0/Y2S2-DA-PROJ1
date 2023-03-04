@@ -6,9 +6,9 @@ using namespace std;
 class Interface {
 
 public:
-    Data d_;
+    //Data d_;
 
-    void setData(Data d){d_ = d;}
+    //void setData(Data d){d_ = d;}
 
     Interface();
     void welcomePage();
@@ -16,22 +16,13 @@ public:
     void readFiles();
 
 
-    //-----------------------
-    void getFlights();
-    void credits() const;
+    void full();
+    void costs();
+    void subgraph();
 
     void exitProgram() const;
-    void getStatistics();
-    void getApMethods();
-
-    void globalStatistic();
-    void countryStatistic();
-    void cityStatistic();
-    void airlineStatistic();
-    void airportStatistic();
     void lastPage() const;
-    vector<string> createVec();
-    void otherInfo();
+    void credits() const;
 
 };
 
