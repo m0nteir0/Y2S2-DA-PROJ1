@@ -1,4 +1,5 @@
 #include <iostream>
+<<<<<<< HEAD
 #include "Data.h"
 int main() {
     std::cout << "Hello, World!" << std::endl;
@@ -10,5 +11,13 @@ int main() {
 
 
     cout << "Done";
+    Interface iFace = Interface();
+    try {
+        iFace.welcomePage();
+    }
+    catch (int exit) {
+        return 0;
+    }
+
     return 0;
 }

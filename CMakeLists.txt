@@ -12,4 +12,7 @@ add_executable(DA_PROJECT1
         Data.h
         Data.cpp
         Station.h
-        Station.cpp)
+        Station.cpp
+        Interface.cpp
+        Interface.h)
+
