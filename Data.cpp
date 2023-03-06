@@ -13,68 +13,35 @@ bool Data::readStations(string filename) {
         if(l == labels) {
             int id = 1;
             string name, district, municipality, township, line;
-            bool in_quote = false;
             string field;
             vector<string> fields;
             char quote_char = '"';
             while (getline(input, l)) {
                 stringstream iss(l);
-                /*
-                while (getline(iss, field, ',')){
-                    if (field[0] == quote_char){
-                        in_quote = true;                                    //estas duas linhas podem ser substituidas por:
-                        if (field.back() == quote_char) in_quote = false;   //in_quote = !(field.back() == quote_char);
-                        fields.push_back(field);
-                    }
-                    else if (in_quote){
-                        fields.back() += "," + field;
-                        if (field.back() == quote_char) in_quote = false;
-                    }
-                    else fields.push_back(field);
-                }
-                */
-
-                //======================================================
                 while (getline(iss, field, ',')){ //needs refactor
                     fields.push_back(field);
                     if (field[0] == quote_char && field.back() != quote_char){
                         getline(iss, field, '"');
-                        fields.back() += "," + field + '"';
-                        getline(iss, field, ',');
+                        fields.back() += "," + field + '"';         //add a comma, because it is part of the input and was lost because of the getline
+                        getline(iss, field, ',');       //consume the comma
                     }
-                    /*
-                    if (field[0] == quote_char){
-                        fields.push_back(field);
-                        if (field.back() != quote_char){
-                            getline(iss, field, '"');
-                            fields.back() += "," + field + '"';
-                            getline(iss, field, ',');
-                        }
-                    }
-                    */
-                    /*
-                    if (field[0] == quote_char && field.back() != quote_char){
-                        fields.push_back(field);
-                        getline(iss, field, '"');
-                        fields.back() += "," + field + '"';
-                        getline(iss, field, ',');
-                    }
-                    else fields.push_back(field);
-                    */
                 }
                 //========================================================
-
+                /*
                 cout << "Id: " << id << endl;
                 for (int i = 0; i< 5; i++){
                     cout << " " << fields[i] << " |";
                 }
                 cout << endl;
+                 */
+
                 name = fields[0];
                 district = fields[1];
                 municipality = fields[2];
                 township = fields[3];
                 line = fields[4];
-                if(names.insert(name).second){ //(names.insert(name).second) return false if element already exists
+
+                if(names.insert(name).second){      //(names.insert(name).second) return false if element already exists
                     Station* station = new Station(name,district,municipality,township,line);
                     Vertex* v = new Vertex(id);
                     v->setStation(station);
@@ -95,11 +62,9 @@ bool Data::readNetworks(std::string filename) {
     if (input.is_open()){
         string l;
         getline(input, l);
-        cout << (l == labels);
         if(l == labels) {
             string station_A, station_B, capacity, service;
-            int counter;
-            //Vertex* vA = nullptr; Vertex* vB = nullptr;
+            int counter = 0;
             while (getline(input, l)) {
                 stringstream iss(l);
                 Vertex* vA = nullptr; Vertex* vB = nullptr;
@@ -110,17 +75,15 @@ bool Data::readNetworks(std::string filename) {
                 counter++;
                 for (auto v : g.getVertexSet()){ // find vertex
                     Station* s = v->getStation();
-                    string n = s->getName();
                     if(s->getName() == station_A) vA = v;
                     else if(s->getName() == station_B) vB = v;
                     if(vA != nullptr && vB != nullptr) break; // both vertex were found.
                 }
 
                 if(!g.addEdge(vA, vB, stod(capacity), service)){
-                    cout << "\nOn line" << (counter+1) <<", one of the stations does not exist.\n";
+                    cout << "\nOn line " << (counter+1) <<", one of the stations does not exist.\n";
                     //return false;
                 }
-                //vA = nullptr; vB = nullptr;
             }
             return true;
         } else cout << "\nFile content is incorrect. Please submit the right file.\n";

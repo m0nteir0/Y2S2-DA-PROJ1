@@ -10,8 +10,8 @@
 #include <iostream>
 #include <set>
 
-#include "station.h"
-#include "graph.h"
+#include "Station.h"
+#include "Graph.h"
 
 using namespace std;
 class Data {
