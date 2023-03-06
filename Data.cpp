@@ -18,7 +18,7 @@ bool Data::readStations(string filename) {
             char quote_char = '"';
             while (getline(input, l)) {
                 stringstream iss(l);
-                while (getline(iss, field, ',')){ //needs refactor
+                while (getline(iss, field, ',')){
                     fields.push_back(field);
                     if (field[0] == quote_char && field.back() != quote_char){
                         getline(iss, field, '"');
@@ -33,7 +33,7 @@ bool Data::readStations(string filename) {
                     cout << " " << fields[i] << " |";
                 }
                 cout << endl;
-                 */
+                */
 
                 name = fields[0];
                 district = fields[1];
@@ -64,14 +64,27 @@ bool Data::readNetworks(std::string filename) {
         getline(input, l);
         if(l == labels) {
             string station_A, station_B, capacity, service;
-            int counter = 0;
+            int counter = 1;
+            string field;
+            vector<string> fields;
+            char quote_char = '"';
+
             while (getline(input, l)) {
                 stringstream iss(l);
                 Vertex* vA = nullptr; Vertex* vB = nullptr;
-                getline(iss, station_A, ',');
-                getline(iss, station_B, ',');
-                getline(iss, capacity, ',');
-                getline(iss, service, ',');
+
+                while (getline(iss, field, ',')){
+                    fields.push_back(field);
+                    if (field[0] == quote_char && field.back() != quote_char){
+                        getline(iss, field, '"');
+                        fields.back() += "," + field + '"';         //add a comma, because it is part of the input and was lost because of the getline
+                        getline(iss, field, ',');       //consume the comma
+                    }
+                }
+                station_A = fields[0];
+                station_B = fields[1];
+                capacity = fields[2];
+                service = fields[3];
                 counter++;
                 for (auto v : g.getVertexSet()){ // find vertex
                     Station* s = v->getStation();
@@ -79,9 +92,10 @@ bool Data::readNetworks(std::string filename) {
                     else if(s->getName() == station_B) vB = v;
                     if(vA != nullptr && vB != nullptr) break; // both vertex were found.
                 }
+                fields.clear();
 
                 if(!g.addEdge(vA, vB, stod(capacity), service)){
-                    cout << "\nOn line " << (counter+1) <<", one of the stations does not exist.\n";
+                    cout << "\nOn line " << (counter) <<", there are stations that do not exist.\n";
                     //return false;
                 }
             }
