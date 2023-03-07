@@ -1,14 +1,15 @@
 #ifndef DA_PROJECT1_INTERFACE_H
 #define DA_PROJECT1_INTERFACE_H
 
+#include "Data.h"
 
 using namespace std;
 class Interface {
 
 public:
-    //Data d_;
+    Data d_;
 
-    //void setData(Data d){d_ = d;}
+    void setData(Data d){d_ = d;}
 
     Interface();
     void welcomePage();

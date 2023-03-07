@@ -192,3 +192,11 @@ void Edge::setService(string service) {
     this->service = service;
 }
 
+bool Edge::getAvailable() const {
+    return available;
+}
+
+void Edge::setAvailable(bool available) {
+    this->available = available;
+}
+

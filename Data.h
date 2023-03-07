@@ -8,7 +8,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include <set>
+#include <map>
 
 #include "Station.h"
 #include "Graph.h"
@@ -17,15 +17,22 @@ using namespace std;
 class Data {
 private:
     Graph g;
-    set<string> names;
+    map<string, int> names;
+
 public:
     Graph getG() const;
+    map<string, int> getNames() const;
 
     void setG(Graph g);
 
 public:
      bool readStations(string filename);
      bool readNetworks(string filename);
+
+     double getMaxFlow(int source, int target);
+     bool path(int source, int target);
+     double findBottleneck(int target);
+     void augmentPath(int target, double bottleneck);
 };
 
 

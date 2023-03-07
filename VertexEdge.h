@@ -89,11 +89,13 @@ public:
     Edge *getReverse() const;
     double getFlow() const;
     string getService() const;
+    bool getAvailable() const;
 
     void setSelected(bool selected);
     void setReverse(Edge *reverse);
     void setFlow(double flow);
     void setService(string service);
+    void setAvailable(bool available);
 protected:
     Vertex * dest; // destination vertex
     double weight; // edge weight, can also be used for capacity
@@ -101,6 +103,7 @@ protected:
     // auxiliary fields
     bool selected = false;
 
+    bool available = true;
     // used for bidirectional edges
     Vertex *orig;
     Edge *reverse = nullptr;

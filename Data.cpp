@@ -41,7 +41,7 @@ bool Data::readStations(string filename) {
                 township = fields[3];
                 line = fields[4];
 
-                if(names.insert(name).second){      //(names.insert(name).second) return false if element already exists
+                if(names.insert({name,id}).second){      //(names.insert(name).second) return false if element already exists
                     Station* station = new Station(name,district,municipality,township,line);
                     Vertex* v = new Vertex(id);
                     v->setStation(station);
@@ -111,4 +111,91 @@ Graph Data::getG() const {
 
 void Data::setG(Graph g) {
     this->g = g;
+}
+
+map<string, int> Data::getNames() const {
+    return names;
+}
+
+double Data::getMaxFlow(int source, int target) {
+    for (Vertex* v : g.getVertexSet()){
+        for (Edge* e : v->getIncoming()) {
+            e->setFlow(0);
+
+            Edge* reverse = new Edge(e->getDest(), e->getOrig(), e->getWeight());
+            reverse->setFlow(0);
+            reverse->setReverse(e);
+            e->setReverse(reverse);
+        }
+    }
+
+    double bottleneck;
+    while (path(source, target)){
+        bottleneck = findBottleneck(target);
+        augmentPath(target, bottleneck);
+    }
+
+    double maxFlow = 0;
+    Vertex* sink = g.findVertex(target);
+    for (Edge* e : sink->getIncoming())
+        maxFlow += e->getFlow();
+    return maxFlow;
+}
+
+bool Data::path(int source, int target) {
+    for (Vertex* v : g.getVertexSet()){
+        v->setVisited(false);
+        v->setPath(nullptr);
+    }
+
+    std::queue<int> s({source});
+    g.findVertex(source)->setVisited(true);
+    while (!s.empty()){
+        Vertex* v = g.findVertex(s.front());
+        for (Edge* e : v->getAdj()) {
+            if (!e->getDest()->isVisited() && e->getWeight() - e->getFlow() > 0) {
+                s.push(e->getDest()->getId());
+                e->getDest()->setVisited(true);
+                e->getDest()->setPath(e);
+                if (e->getDest()->getId() == target)
+                    return true;
+            }
+        }
+
+        for (Edge* e : v->getIncoming()){
+            if (e->getReverse()->getOrig() == v && !e->getReverse()->getDest()->isVisited() && e->getReverse()->getFlow() != 0){
+                s.push(e->getReverse()->getDest()->getId());
+                e->getReverse()->getDest()->setVisited(true);
+                e->getReverse()->getDest()->setPath(e->getReverse());
+                if (e->getReverse()->getDest()->getId() == target)
+                    return true;
+            }
+        }
+
+        s.pop();
+    }
+    return false;
+}
+
+double Data::findBottleneck(int target) {
+    Vertex* v = g.findVertex(target);
+    double bottleneck = std::numeric_limits<double>::max();
+    while (v->getPath() != nullptr){
+        double remaining = v->getPath()->getWeight() - v->getPath()->getFlow();
+        if (remaining < bottleneck)
+            bottleneck = remaining;
+        v = v->getPath()->getOrig();
+    }
+    return bottleneck;
+}
+
+void Data::augmentPath(int target, double bottleneck) {
+    Vertex* v = g.findVertex(target);
+    while (v->getPath() != nullptr){
+        v->getPath()->setFlow(v->getPath()->getFlow() + bottleneck);
+
+        v->getPath()->getReverse()->setFlow(v->getPath()->getReverse()->getFlow() - bottleneck);
+
+        v = v->getPath()->getOrig();
+    }
 }

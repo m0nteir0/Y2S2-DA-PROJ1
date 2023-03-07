@@ -55,22 +55,29 @@ Interface::Interface() = default;
 void Interface::welcomePage() {
     cout << endl << "=========WELCOME PAGE=========" << endl;
     cout << endl << "Options:\n\t1-Read files\n\t2-Credits\n\te-Exit"<<endl;
-    char input;
+    string input;
     while (true){
         cout << "Choose option:";
-        cin >> input;
+        getline( cin, input);
+        cout << endl << "Input: " << input << endl;
+        if(input.size()>1){
+            cout << endl << "Please, only type one of the characters in the options described above." << endl;
+        }
 
-        switch (input) {
-            case ('1'):
-                readFiles();
-                return welcomePage();
-            case ('2'):
-                credits();
-                return welcomePage();
-            case ('e'):
-                return exitProgram();
-            default:
-                cout << endl << "Not a valid option" << endl;
+        else {
+
+            switch (input[0]) {
+                case ('1'):
+                    readFiles();
+                    return welcomePage();
+                case ('2'):
+                    credits();
+                    return welcomePage();
+                case ('e'):
+                    return exitProgram();
+                default:
+                    cout << endl << "Not a valid option" << endl;
+            }
         }
     }
 }
@@ -87,39 +94,46 @@ void Interface::readFiles() {
     cout << endl;
     cout << "Which files do you want to read?" << endl;
     cout << endl << "Options:\n\t1-Default files\n\t2-Custom files\n\te-Exit"<<endl;
-    char input;
+    string input;
 
     string in;
 
     while (true){
         cout << "Choose option:";
         cin >> input;
-        switch (input) {
-            case ('1'):
-                //d_.readStations(DEFAULT_STATIONS);
-                //d_.readNetworks(DEFAULT_NETWORKS);
-                mainMenu();
-            case ('2'):
-                cout << endl << "Insert custom station file path:" << endl;
-                cout << endl << "If you want default, write '-':" << endl;
-                getline(cin >>ws, in);
+
+        if(input.size()>1){
+            cout << endl << "Please, only type one of the characters in the options described above." << endl;
+        }
+
+        else {
+            switch (input[0]) {
+                case ('1'):
+                    //d_.readStations(DEFAULT_STATIONS);
+                    //d_.readNetworks(DEFAULT_NETWORKS);
+                    mainMenu();
+                case ('2'):
+                    cout << endl << "Insert custom station file path:" << endl;
+                    cout << endl << "If you want default, write '-':" << endl;
+                    getline(cin >> ws, in);
 
 
-                /*if (in != "-") d_.readStations(in);
-                else d_.readStations(DEFAULT_STATIONS);*/
+                    /*if (in != "-") d_.readStations(in);
+                    else d_.readStations(DEFAULT_STATIONS);*/
 
-                cout << endl << "Insert custom network file path:" << endl;
-                cout << endl << "If you want default, write '-':" << endl;
+                    cout << endl << "Insert custom network file path:" << endl;
+                    cout << endl << "If you want default, write '-':" << endl;
 /*
                 if (in != "-") d_.readNetworks(in);
                 else d_.readNetworks(DEFAULT_NETWORKS);*/
 
-                mainMenu();
+                    mainMenu();
 
-            case ('e'):
-                return exitProgram();
-            default:
-                cout << endl << "Not a valid option" << endl;
+                case ('e'):
+                    return exitProgram();
+                default:
+                    cout << endl << "Not a valid option" << endl;
+            }
         }
     }
 }
@@ -180,15 +194,16 @@ void Interface::full() {
         int k2;
         string station;
         int res;
-
+        int source, target;
         switch (input) {
             case ('1'):
                 cout << "Type origin station:" << endl;
-                getline(cin >>ws, os);
+                getline(cin >> ws, os);
                 cout << "Type destination station:" << endl;
-                getline(cin >>ws, ds);
-
-                //res = maxTrains(os, ds);
+                getline(cin >> ws, ds);
+                source = d_.getNames()[os];
+                target = d_.getNames()[ds];
+                res = d_.getMaxFlow(source, target);
                 cout << "The maximum number of trains that can simultaneously travel between" << os << " and " << ds << "is:" << res << endl;
                 lastPage();
                 return full();
@@ -271,10 +286,25 @@ void Interface::costs() {
 
 void Interface::subgraph() {
     cout << endl << "=========RAILWAY NETWORK WITH POSSIBLE LINE FAILURES MENU=========" << endl;
+
+
+    cout << endl << "Do you want to type the affected LINE(S) or the affected STATION(S) to be cut of the railway network?" << endl;
+    cout << endl << "Options:\n\t1-Lines\n\t2-Stations" << endl;
+    char input0;
+    cin >> input0;
+
+    if(input0==1) {
+        cout << endl << "Type the affected lines: "<< endl; //ver como receber isto depois
+        //
+    }
+    else{
+        cout << endl << "Type the affected stations:" << endl; //ver como receber isto depois
+    }
+
+
     cout << endl << "Options:\n\t1-Maximum number of trains that can simultaneously travel between two specific stations in a network of reduced connectivity\n\t2-Top-k most affected stations for each segment to be considered\n\tb-Back\n\te-Exit" << endl;
     char input;
 
-    cout << endl << "Type the affected lines (to be cut of the railway network): " << endl; //ver como receber isto depois
     while (true) {
         cout << "Choose option:";
         cin >> input;
@@ -288,6 +318,7 @@ void Interface::subgraph() {
             case ('1'):
                 //res = maxTrainsSubgraph;
                 cout << "The max nr of trains is " << res[0] << "with the minimum cost of" << res[1] << endl;
+                return subgraph();
 
             case('2'):
                 cout << "Choose the number of places for the 'top' station list: " << endl;
