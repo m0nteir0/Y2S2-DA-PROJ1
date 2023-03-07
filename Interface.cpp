@@ -59,7 +59,7 @@ void Interface::welcomePage() {
     while (true){
         cout << "Choose option:";
         getline( cin, input);
-        cout << endl << "Input: " << input << endl;
+        //cout << endl << "Input: " << input << endl;
         if(input.size()>1){
             cout << endl << "Please, only type one of the characters in the options described above." << endl;
         }
@@ -96,12 +96,12 @@ void Interface::readFiles() {
     cout << endl << "Options:\n\t1-Default files\n\t2-Custom files\n\te-Exit"<<endl;
     string input;
 
-    string in;
+    string input2;
 
     while (true){
         cout << "Choose option:";
-        cin >> input;
-
+        getline( cin, input);
+        //cout << endl << "Input: " << input << endl;
         if(input.size()>1){
             cout << endl << "Please, only type one of the characters in the options described above." << endl;
         }
@@ -115,7 +115,7 @@ void Interface::readFiles() {
                 case ('2'):
                     cout << endl << "Insert custom station file path:" << endl;
                     cout << endl << "If you want default, write '-':" << endl;
-                    getline(cin >> ws, in);
+                    getline(cin, input2);
 
 
                     /*if (in != "-") d_.readStations(in);
@@ -149,25 +149,32 @@ void Interface::mainMenu() {
 
     cout << endl << "I want to get informations regarding:" << endl;
     cout << endl << "Options:\n\t1-Full railway capacity\n\t2-Costs (depending on service type)\n\t3-Considering maintenance and line failures\n\te-Exit"<<endl;
-    char input;
+    string input;
     while (true){
         cout << "Choose option:";
-        cin >> input;
+        getline( cin, input);
+        //cout << endl << "Input: " << input << endl;
+        if(input.size()>1){
+            cout << endl << "Please, only type one of the characters in the options described above." << endl;
+        }
 
-        switch (input) {
-            case ('1'):
-                full();
-                return mainMenu();
-            case ('2'):
-                costs();
-                return mainMenu();
-            case ('3'):
-                subgraph();
-                return mainMenu();
-            case ('e'):
-                return exitProgram();
-            default:
-                cout << endl << "Not a valid option" << endl;
+        else {
+
+            switch (input[0]) {
+                case ('1'):
+                    full();
+                    return mainMenu();
+                case ('2'):
+                    costs();
+                    return mainMenu();
+                case ('3'):
+                    subgraph();
+                    return mainMenu();
+                case ('e'):
+                    return exitProgram();
+                default:
+                    cout << endl << "Not a valid option" << endl;
+            }
         }
     }
 }
@@ -182,75 +189,88 @@ void Interface::full() {
                     "3-Top-k municipalities and/or districts, regarding their transportation needs\n\t"
                     "4-Maximum number of trains that can simultaneously arrive at a given station"
                     "b-Back\n\te-Exit"<<endl;
-    char input;
+    string input;
     while (true){
         cout << "Choose option:";
-        cin >> input;
-        string os;
-        string ds;
-        vector<string> vec;
-        char in;
-        string k;
-        int k2;
-        string station;
-        int res;
-        int source, target;
-        switch (input) {
-            case ('1'):
-                cout << "Type origin station:" << endl;
-                getline(cin >> ws, os);
-                cout << "Type destination station:" << endl;
-                getline(cin >> ws, ds);
-                source = d_.getNames()[os];
-                target = d_.getNames()[ds];
-                res = d_.getMaxFlow(source, target);
-                cout << "The maximum number of trains that can simultaneously travel between" << os << " and " << ds << "is:" << res << endl;
-                lastPage();
-                return full();
+        getline( cin, input);
+        //cout << endl << "Input: " << input << endl;
+        if(input.size()>1){
+            cout << endl << "Please, only type one of the characters in the options described above." << endl;
+        }
 
-            case ('2'):
-                //vec = stationPairs();
-                cout << "The pair(s) are:" << endl << vec[0]; //tratar depois
-                lastPage();
-                return full();
-            case ('3'):
-                cout << "Choose an option" << endl << "1-Municipalities" << endl << "2-Districts" << endl;
-                cin >> in;
-                cout << "Choose the number of places for the 'top' station list: " << endl;
-                cin >> k;
-                k2 = stoi(k);
+        else {
 
-                if (k2<0) cout << endl << "Not a valid number" << endl;
+            //for functions
+            string os;
+            string ds;
+            vector <string> vec;
+            char in;
+            string k;
+            int k2;
+            string station;
+            int res;
+            int source, target;
+            //---------------
 
-                switch(in){
-                    case ('1'): //vec = topM(k2);
-                     break;
-                    case('2'): // vec = topD(k2);
-                     break;
-                    default:
-                        cout << endl << "Not a valid option" << endl;
-                }
+            switch (input[0]) {
+                case ('1'):
+                    cout << "Type origin station:" << endl;
+                    getline(cin >> ws, os);
+                    cout << "Type destination station:" << endl;
+                    getline(cin >> ws, ds);
+                    source = d_.getNames()[os];
+                    target = d_.getNames()[ds];
+                    res = d_.getMaxFlow(source, target);
+                    cout << "The maximum number of trains that can simultaneously travel between" << os << " and " << ds
+                         << "is:" << res << endl;
+                    lastPage();
+                    return full();
 
-                cout << "The top is: " << endl;
-                for (int i = 0; i<vec.size(); i++){
-                    cout << "-" << vec[i] << endl;
-                }
+                case ('2'):
+                    //vec = stationPairs();
+                    cout << "The pair(s) are:" << endl << vec[0]; //tratar depois
+                    lastPage();
+                    return full();
+                case ('3'):
+                    cout << "Choose an option" << endl << "1-Municipalities" << endl << "2-Districts" << endl;
+                    cin >> in;
+                    cout << "Choose the number of places for the 'top' station list: " << endl;
+                    cin >> k;
+                    k2 = stoi(k);
 
-                lastPage();
-                return full();
-            case('4'):
-                cout << "Type destination station:" << endl;
-                getline( cin >>ws, station);
-                //res = nrTrainsArriving(station);
-                cout << "The maximum number of trains that can simultaneously arrive at " << station << " is: " << res;
-                lastPage();
-                return full();
-            case ('e'):
-                return exitProgram();
-            case('b'):
-                return mainMenu();
-            default:
-                cout << endl << "Not a valid option" << endl;
+                    if (k2 < 0) cout << endl << "Not a valid number" << endl;
+
+                    switch (in) {
+                        case ('1'): //vec = topM(k2);
+                            break;
+                        case ('2'): // vec = topD(k2);
+                            break;
+                        default:
+                            cout << endl << "Not a valid option" << endl;
+                    }
+
+                    cout << "The top is: " << endl;
+                    for (int i = 0; i < vec.size(); i++) {
+                        cout << "-" << vec[i] << endl;
+                    }
+
+                    lastPage();
+                    return full();
+                case ('4'):
+                    cout << "Type destination station:" << endl;
+                    getline(cin >> ws, station);
+                    //res = nrTrainsArriving(station);
+                    cout << "The maximum number of trains that can simultaneously arrive at " << station << " is: "
+                         << res;
+                    lastPage();
+                    return full();
+                case ('e'):
+                    return exitProgram();
+                case ('b'):
+                    return mainMenu();
+                default:
+                    cout << endl << "Not a valid option" << endl;
+            }
         }
     }
 }
@@ -258,28 +278,35 @@ void Interface::full() {
 void Interface::costs() {
     cout << endl << "=========COSTS REGARDING SERVICE TYPE (standard or alpha pendular) MENU=========" << endl;
     cout << endl << "Options:\n\t1-Maximum amount of trains that can simultaneously travel between two specific stations with minimum cost for the company"<< endl;
-    char input;
+    string input;
     while (true) {
         cout << "Choose option:";
-        cin >> input;
-        vector<int> res;
-
-        switch (input) {
-
-            case ('1'):
-                //res = maxTrainsCost;
-                cout << "The max nr of trains is " << res[0] << "with the minimum cost of" << res[1] << endl;
-                lastPage();
-                return costs();
-            case ('e'):
-                return exitProgram();
-            case ('b'):
-                return mainMenu();
-            default:
-                cout << endl << "Not a valid option" << endl;
+        getline( cin, input);
+        //cout << endl << "Input: " << input << endl;
+        if(input.size()>1){
+            cout << endl << "Please, only type one of the characters in the options described above." << endl;
         }
 
+        else {
+            //for functions:
+            vector<int> res;
 
+            switch (input[0]) {
+
+                case ('1'):
+                    //res = maxTrainsCost;
+                    cout << "The max nr of trains is " << res[0] << "with the minimum cost of" << res[1] << endl;
+                    lastPage();
+                    return costs();
+                case ('e'):
+                    return exitProgram();
+                case ('b'):
+                    return mainMenu();
+                default:
+                    cout << endl << "Not a valid option" << endl;
+            }
+
+        }
     }
 }
 
@@ -290,58 +317,73 @@ void Interface::subgraph() {
 
     cout << endl << "Do you want to type the affected LINE(S) or the affected STATION(S) to be cut of the railway network?" << endl;
     cout << endl << "Options:\n\t1-Lines\n\t2-Stations" << endl;
-    char input0;
-    cin >> input0;
 
-    if(input0==1) {
-        cout << endl << "Type the affected lines: "<< endl; //ver como receber isto depois
-        //
+    string input0;
+    cout << "Choose option:";
+    getline( cin, input0);
+    cout << endl << "Input: " << input0 << endl;
+
+    if(input0.size()>1){
+        cout << endl << "Please, only type one of the characters in the options described above." << endl;
     }
-    else{
-        cout << endl << "Type the affected stations:" << endl; //ver como receber isto depois
+
+    else {
+
+        if (input0[0] == 1) {
+            cout << endl << "Type the affected lines: " << endl; //ver como receber isto depois
+            //
+        } else {
+            cout << endl << "Type the affected stations:" << endl; //ver como receber isto depois
+        }
     }
 
 
     cout << endl << "Options:\n\t1-Maximum number of trains that can simultaneously travel between two specific stations in a network of reduced connectivity\n\t2-Top-k most affected stations for each segment to be considered\n\tb-Back\n\te-Exit" << endl;
-    char input;
+    string input;
 
     while (true) {
         cout << "Choose option:";
-        cin >> input;
-        vector<int> res;
-        string k;
-        int k2;
-        vector<string> vec;
-
-        switch (input) {
-
-            case ('1'):
-                //res = maxTrainsSubgraph;
-                cout << "The max nr of trains is " << res[0] << "with the minimum cost of" << res[1] << endl;
-                return subgraph();
-
-            case('2'):
-                cout << "Choose the number of places for the 'top' station list: " << endl;
-                cin >> k;
-                k2 = stoi(k);
-                if (k2<0) cout << endl << "Not a valid number" << endl;
-
-                //vec = topKSubgraph(int k);
-                cout << "The top is: " << endl;
-                for (int i = 0; i<vec.size(); i++){
-                    cout << "-" << vec[i] << endl;
-                }
-                lastPage();
-                return subgraph();
-
-            case ('e'):
-                return exitProgram();
-            case ('b'):
-                return mainMenu();
-            default:
-                cout << endl << "Not a valid option" << endl;
+        getline( cin, input);
+        //cout << endl << "Input: " << input << endl;
+        if(input.size()>1){
+            cout << endl << "Please, only type one of the characters in the options described above." << endl;
         }
 
+        else {
+            vector<int> res;
+            string k;
+            int k2;
+            vector <string> vec;
+
+            switch (input[0]) {
+
+                case ('1'):
+                    //res = maxTrainsSubgraph;
+                    cout << "The max nr of trains is " << res[0] << "with the minimum cost of" << res[1] << endl;
+                    return subgraph();
+
+                case ('2'):
+                    cout << "Choose the number of places for the 'top' station list: " << endl;
+                    cin >> k;
+                    k2 = stoi(k);
+                    if (k2 < 0) cout << endl << "Not a valid number" << endl;
+
+                    //vec = topKSubgraph(int k);
+                    cout << "The top is: " << endl;
+                    for (int i = 0; i < vec.size(); i++) {
+                        cout << "-" << vec[i] << endl;
+                    }
+                    lastPage();
+                    return subgraph();
+
+                case ('e'):
+                    return exitProgram();
+                case ('b'):
+                    return mainMenu();
+                default:
+                    cout << endl << "Not a valid option" << endl;
+            }
+        }
 
     }
 }
@@ -360,18 +402,25 @@ void Interface::credits() const {
     cout << "Guilherme Monteiro, up202108668" << endl;
     cout << "Sofia Sa, up202108676" << endl;
     cout << endl << endl << "Options:\n\tb-Back\n\te-Exit"<< endl;
-    char input;
+    string input;
     while (true) {
         cout << "Choose option:";
-        cin >> input;
+        getline( cin, input);
+        //cout << endl << "Input: " << input << endl;
+        if(input.size()>1){
+            cout << endl << "Please, only type one of the characters in the options described above." << endl;
+        }
 
-        switch (input) {
-            case ('b'):
-                return;
-            case ('e'):
-                return exitProgram();
-            default:
-                cout << endl << "Not a valid option" << endl;
+        else {
+
+            switch (input[0]) {
+                case ('b'):
+                    return;
+                case ('e'):
+                    return exitProgram();
+                default:
+                    cout << endl << "Not a valid option" << endl;
+            }
         }
     }
 }
@@ -384,17 +433,24 @@ void Interface::credits() const {
 void Interface::lastPage() const {
     cout << endl << endl;
     cout << endl << "Options:\n\tb-Back\n\te-Exit"<<endl;
-    char input;
+    string input;
     while (true){
         cout << "Choose option:";
-        cin >> input;
-        switch (input) {
-            case ('b'):
-                return;
-            case ('e'):
-                return exitProgram();
-            default:
-                cout << endl << "Not a valid option" << endl;
+        getline( cin, input);
+        //cout << endl << "Input: " << input << endl;
+        if(input.size()>1){
+            cout << endl << "Please, only type one of the characters in the options described above." << endl;
+        }
+
+        else {
+            switch (input[0]) {
+                case ('b'):
+                    return;
+                case ('e'):
+                    return exitProgram();
+                default:
+                    cout << endl << "Not a valid option" << endl;
+            }
         }
     }
 }
