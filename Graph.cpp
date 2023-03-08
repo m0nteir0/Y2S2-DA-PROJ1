@@ -80,6 +80,17 @@ bool Graph::addBidirectionalEdge(const int &sourc, const int &dest, double w) {
     return true;
 }
 
+bool Graph::addBidirectionalEdge(Vertex* v1, Vertex* v2, double w, string service) {
+
+    if (v1 == nullptr || v2 == nullptr)
+        return false;
+    auto e1 = v1->addEdge(v2, w, service);
+    auto e2 = v2->addEdge(v1, w, service);
+    e1->setReverse(e2);
+    e2->setReverse(e1);
+    return true;
+}
+
 void deleteMatrix(int **m, int n) {
     if (m != nullptr) {
         for (int i = 0; i < n; i++)

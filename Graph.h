@@ -37,6 +37,8 @@ public:
     bool addEdge(Vertex* v1,Vertex* v2, double w, string service);
 
     bool addBidirectionalEdge(const int &sourc, const int &dest, double w);
+    bool addBidirectionalEdge(Vertex* v1, Vertex* v2, double w, string service);
+
 
     int getNumVertex() const;
     std::vector<Vertex *> getVertexSet() const;
