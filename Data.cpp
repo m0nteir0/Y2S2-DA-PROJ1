@@ -119,14 +119,17 @@ map<string, int> Data::getNames() const {
 
 double Data::getMaxFlow(int source, int target) {
     for (Vertex* v : g.getVertexSet()){
-        for (Edge* e : v->getIncoming()) {
+        for (Edge* e : v->getAdj()){
+            e->setFlow(0);
+        }
+        /*for (Edge* e : v->getIncoming()) {
             e->setFlow(0);
 
             Edge* reverse = new Edge(e->getDest(), e->getOrig(), e->getWeight());
             reverse->setFlow(0);
             reverse->setReverse(e);
             e->setReverse(reverse);
-        }
+        }*/
     }
 
     double bottleneck;
@@ -162,6 +165,7 @@ bool Data::path(int source, int target) {
             }
         }
 
+        /*
         for (Edge* e : v->getIncoming()){
             if (e->getReverse()->getOrig() == v && !e->getReverse()->getDest()->isVisited() && e->getReverse()->getFlow() != 0){
                 s.push(e->getReverse()->getDest()->getId());
@@ -171,6 +175,7 @@ bool Data::path(int source, int target) {
                     return true;
             }
         }
+         */
 
         s.pop();
     }
@@ -199,3 +204,45 @@ void Data::augmentPath(int target, double bottleneck) {
         v = v->getPath()->getOrig();
     }
 }
+
+
+//--------------------------
+/* T2.2 */
+pair<vector<pair<Station*,Station*>>,double> Data::stationPairs(){
+    double max = 0;
+    Station* s1; Station* s2;
+    vector<pair<Station*,Station*>> estacoes;
+
+    for(int i1=1; i1<g.getNumVertex(); i1++){
+        for (int i2=i1+1; i2<=g.getNumVertex(); i2++){
+            double val = getMaxFlow(i1,i2);
+            if (val > max){
+                estacoes.clear();
+                max = val;
+                s1 = g.findVertex(i1)->getStation();
+                s2 = g.findVertex(i2)->getStation();
+                estacoes.push_back({s1, s2});
+            } else if (val == max) {
+                s1 = g.findVertex(i1)->getStation();
+                s2 = g.findVertex(i2)->getStation();
+                estacoes.push_back({s1,s2});
+            }
+        }
+    }
+    return {estacoes, max};
+}
+
+
+
+//-----------------------------------
+
+/* T2.4 */
+
+double Data::nrTrainsArriving(int id){
+    double res=0;
+    for(Edge* e : g.findVertex(id)->getIncoming()){
+        res += e->getWeight();
+    }
+    return res;
+}
+

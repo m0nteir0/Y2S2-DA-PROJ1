@@ -24,6 +24,7 @@ public:
     map<string, int> getNames() const;
 
     void setG(Graph g);
+    // ~Data();
 
 public:
      bool readStations(string filename);
@@ -33,6 +34,9 @@ public:
      bool path(int source, int target);
      double findBottleneck(int target);
      void augmentPath(int target, double bottleneck);
+
+     pair<vector<pair<Station*,Station*>>,double> stationPairs();
+    double nrTrainsArriving(int id);
 };
 
 

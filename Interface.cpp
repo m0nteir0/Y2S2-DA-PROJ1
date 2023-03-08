@@ -31,9 +31,9 @@ using namespace std;
  *
  * full:
  * 1 - int maxTrains() - T2.1
- * 2 - vector<string> stationPairs() - T2.2
+ * 2 - pair<vector<pair<Station*,Station*>>,double> stationPairs() - T2.2
  * 3 - vec<string> topM(int k) e vec<string> topD(int k) - T2.3
- * 4 - int nrTrainsArriving(station) - T2.4
+ * 4 - int nrTrainsArriving(int id); - T2.4
  *
  * costs:
  * 1 - vector<int> maxTrainsCost() - T3.1
@@ -203,17 +203,15 @@ void Interface::full() {
             //for functions
             string os;
             string ds;
-            vector <string> vec;
             char in;
             string k;
             int k2;
-            string station;
-            int res;
             int source, target;
             //---------------
 
             switch (input[0]) {
-                case ('1'):
+                case ('1'): {
+                    int res;
                     cout << "Type origin station:" << endl;
                     getline(cin >> ws, os);
                     cout << "Type destination station:" << endl;
@@ -225,12 +223,27 @@ void Interface::full() {
                          << "is:" << res << endl;
                     lastPage();
                     return full();
+                }
+                case ('2'): {
+                    pair<vector<pair<Station*,Station*>>,double> pairs;
+                    pairs = d_.stationPairs();
 
-                case ('2'):
-                    //vec = stationPairs();
-                    cout << "The pair(s) are:" << endl << vec[0]; //tratar depois
+                    if (pairs.first.size() == 1) {
+                    cout << "The pair is " << pairs.first[0].first->getName() << " , " << pairs.first[0].second->getName() << " with " << pairs.second << " trains." << endl;
+                    }
+
+                    else {
+                        cout << "The pairs are:" << endl;
+
+                        for (auto p : pairs.first){
+                            cout << "[" << p.first->getName() << " , " << p.second->getName() << "]" << endl;
+                        }
+
+                        cout << "with " << pairs.second << " trains." << endl;
+                    }
                     lastPage();
                     return full();
+                }
                 case ('3'):
                     cout << "Choose an option" << endl << "1-Municipalities" << endl << "2-Districts" << endl;
                     cin >> in;
@@ -249,21 +262,26 @@ void Interface::full() {
                             cout << endl << "Not a valid option" << endl;
                     }
 
-                    cout << "The top is: " << endl;
+                    /*cout << "The top is: " << endl;
                     for (int i = 0; i < vec.size(); i++) {
                         cout << "-" << vec[i] << endl;
-                    }
+                    }*/
 
                     lastPage();
                     return full();
-                case ('4'):
-                    cout << "Type destination station:" << endl;
+                case ('4'): {
+                    string station;
+                    cout << "Type the name of the station:" << endl;
                     getline(cin >> ws, station);
-                    //res = nrTrainsArriving(station);
+
+                    int id = d_.getNames()[station];
+                    double res = d_.nrTrainsArriving(id);
+
                     cout << "The maximum number of trains that can simultaneously arrive at " << station << " is: "
                          << res;
                     lastPage();
                     return full();
+                }
                 case ('e'):
                     return exitProgram();
                 case ('b'):
