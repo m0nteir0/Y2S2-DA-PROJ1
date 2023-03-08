@@ -13,6 +13,7 @@ int main() {
 
     cout << "Done";
     Interface iFace = Interface();
+    iFace.setData(d);
     try {
         iFace.welcomePage();
     }
