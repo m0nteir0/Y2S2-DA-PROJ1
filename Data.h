@@ -9,6 +9,7 @@
 #include <sstream>
 #include <iostream>
 #include <map>
+#include <unordered_set>
 
 #include "Station.h"
 #include "Graph.h"
@@ -18,6 +19,8 @@ class Data {
 private:
     Graph g;
     map<string, int> names;
+    unordered_set<string> districts;
+    unordered_set<string> municipalities;
 
 public:
     Graph getG() const;
@@ -36,7 +39,8 @@ public:
      void augmentPath(int target, double bottleneck);
 
      pair<vector<pair<Station*,Station*>>,double> stationPairs();
-    double nrTrainsArriving(int id);
+     vector<pair<string, double>> topDistricts();
+     double nrTrainsArriving(int id);
 };
 
 

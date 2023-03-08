@@ -41,6 +41,9 @@ bool Data::readStations(string filename) {
                 township = fields[3];
                 line = fields[4];
 
+                districts.insert(district);
+                municipalities.insert(municipality);
+
                 if(names.insert({name,id}).second){      //(names.insert(name).second) return false if element already exists
                     Station* station = new Station(name,district,municipality,township,line);
                     Vertex* v = new Vertex(id);
@@ -232,7 +235,31 @@ pair<vector<pair<Station*,Station*>>,double> Data::stationPairs(){
     return {estacoes, max};
 }
 
+//--------------------------
+/* T2.3 */
+vector<pair<string, double>> Data::topDistricts() {
+    vector<pair<string, double>> res;
+    for (const string& district : districts){
+        double district_flow = 0;
+        int station_count = 0;
+        for (int i = 1; i < g.getNumVertex(); i++){
+            string district1 = g.findVertex(i)->getStation()->getDistrict();
+            if (district1 == district){
+                for (int j = i + 1; j <= g.getNumVertex(); j++){
+                    if (district1 == g.findVertex(j)->getStation()->getDistrict()){
+                        district_flow += getMaxFlow(i, j);
+                        station_count++;
+                    }
+                }
+            }
+        }
+        if (district_flow > 0 && station_count > 0)
+            res.push_back({district, district_flow / station_count});
+    }
+    std::sort(res.begin(), res.end(), [](const pair<string, double> p1, const pair<string, double> p2){return p1.second > p2.second;});
 
+    return res;
+}
 
 //-----------------------------------
 
