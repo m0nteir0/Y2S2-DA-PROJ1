@@ -256,8 +256,10 @@ void Interface::full() {
                     switch (in) {
                         case ('1'): //vec = topM(k2);
                             break;
-                        case ('2'): // vec = topD(k2);
+                        case ('2'): {
+                            vector<pair<string, double>> a = d_.topDistricts();
                             break;
+                        }
                         default:
                             cout << endl << "Not a valid option" << endl;
                     }
