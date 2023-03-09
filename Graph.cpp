@@ -109,6 +109,14 @@ void deleteMatrix(double **m, int n) {
     }
 }
 
+void Graph::disableStations(vector<int> stations){
+    for (int i : stations){
+        Vertex* v = findVertex(i);
+        for (auto e : v->getAdj()) e->setAvailable(false);
+        for (auto e : v->getIncoming()) e->setAvailable(false);
+    }
+}
+
 Graph::~Graph() {
     deleteMatrix(distMatrix, vertexSet.size());
     deleteMatrix(pathMatrix, vertexSet.size());

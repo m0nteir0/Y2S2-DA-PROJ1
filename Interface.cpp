@@ -335,7 +335,7 @@ void Interface::subgraph() {
     cout << endl << "=========RAILWAY NETWORK WITH POSSIBLE LINE FAILURES MENU=========" << endl;
 
 
-    cout << endl << "Do you want to type the affected LINE(S) or the affected STATION(S) to be cut of the railway network?" << endl;
+    cout << endl << "Do you want to type the affected LINE(S) or the affected STATION(S) to be cut off the railway network?" << endl;
     cout << endl << "Options:\n\t1-Lines\n\t2-Stations" << endl;
 
     string input0;
@@ -343,20 +343,59 @@ void Interface::subgraph() {
     getline( cin, input0);
     cout << endl << "Input: " << input0 << endl;
 
-    if(input0.size()>1){
+    if(input0.size()>1){ //digitou mal
         cout << endl << "Please, only type one of the characters in the options described above." << endl;
+        return subgraph();
     }
 
     else {
 
-        if (input0[0] == 1) {
-            cout << endl << "Type the affected lines: " << endl; //ver como receber isto depois
-            //
-        } else {
-            cout << endl << "Type the affected stations:" << endl; //ver como receber isto depois
+        if (input0[0] == 1) { //lines
+            cout << endl << "Affected lines have 2 connecting stations. Type one of them and we will print the connecting stations.\\n\\n" << endl;
+            string s1 = "";
+            bool flag = 1;
+            while(flag){
+                getline(cin, s1);
+                if (d_.getNames().find(s1)!=d_.getNames().end()){
+                    int id1 = d_.getNames()[s1];
+                    for(auto connection : d_.getG().findVertex(id1)->getAdj()){
+                        cout << connection->getDest()->getStation() << "-" << connection->getDest()->getStation()->getName() << "\n";
+                    }
+                    cout << "Choose the number of the connecting station. \n";
+                }
+
+            //WIP
+
+
+        }
+
+        else { //stations
+            cout << endl << "Type the affected station(s), hit enter between stations and 'd' when done.\\n\\n" << endl; //ver como receber isto depois
+            //pode receber várias stations. -> converter para int, adicionar a vetor/container
+            bool flag = true;
+            vector<int> v = {}; //vetor com IDs das stations recebidas como input
+
+            while(flag){
+                    string inp = "";
+                    getline(cin, inp);
+                    if ( inp == "d") flag = false;
+                    else{
+                        if (d_.getNames().find(inp) != d_.getNames().end())
+                            v.push_back(d_.getNames()[inp]);
+                        else cout << "Not a valid station."<< endl;
+                    }
+            }
+            d_.getG().disableStations(v);
+            cout << "Stations removed." << endl;
+            }
+        for (auto i : d_.getG().findVertex(d_.getNames()["Faro"])->getAdj()){
+        cout << i->getOrig() << " " << i->getDest() << " " << i->getAvailable() << endl;
+        }
+        cout << endl;
+        for (auto i : d_.getG().findVertex(d_.getNames()["Faro"])->getIncoming()){
+            cout << i->getOrig() << " " << i->getDest() << " " << i->getAvailable() << endl;
         }
     }
-
 
     cout << endl << "Options:\n\t1-Maximum number of trains that can simultaneously travel between two specific stations in a network of reduced connectivity\n\t2-Top-k most affected stations for each segment to be considered\n\tb-Back\n\te-Exit" << endl;
     string input;

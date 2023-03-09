@@ -5,11 +5,12 @@
 
 int main() {
     Data d;
-    bool a = d.readStations("../Data/Project1Data/stations1.csv");
-    bool b = d.readNetworks("../Data/Project1Data/network1.csv");
+    bool a = d.readStations("../Data/Project1Data/stations.csv");
+    bool b = d.readNetworks("../Data/Project1Data/network.csv");
     cout << endl << a << endl;
     cout << b << endl;
     cout << d.getMaxFlow(2,6);
+
 
     cout << "Done";
     Interface iFace = Interface();

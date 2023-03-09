@@ -39,6 +39,8 @@ public:
     bool addBidirectionalEdge(const int &sourc, const int &dest, double w);
     bool addBidirectionalEdge(Vertex* v1, Vertex* v2, double w, string service);
 
+    void disableStations(vector<int> stations);
+
 
     int getNumVertex() const;
     std::vector<Vertex *> getVertexSet() const;
@@ -52,6 +54,7 @@ protected:
      * Finds the index of the vertex with a given content.
      */
     int findVertexIdx(const int &id) const;
+
 };
 
 void deleteMatrix(int **m, int n);
