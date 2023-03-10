@@ -350,23 +350,49 @@ void Interface::subgraph() {
 
     else {
 
-        if (input0[0] == 1) { //lines
-            cout << endl << "Affected lines have 2 connecting stations. Type one of them and we will print the connecting stations.\\n\\n" << endl;
+        if (input0[0] == '1') { //lines
+            cout << endl << "Type the affected lines(s) and hit 'd' when done.\\n\\n"
+                 << endl; //ver como receber isto depois
+
             string s1 = "";
-            bool flag = 1;
-            while(flag){
+            vector<int> ids = {};
+            vector<pair<int, int>> lines = {};
+            bool flag = true;
+
+            while (flag) {
+                cout << endl
+                     << "Affected lines have 2 connecting stations. Type one of them and we will print the connecting stations.\n\n"
+                     << endl;
+                cout << "Station:";
                 getline(cin, s1);
-                if (d_.getNames().find(s1)!=d_.getNames().end()){
+                cout << endl;
+
+                if (s1 == "d") {
+                    flag = false;
+                } else {
+                if (d_.getNames().find(s1) != d_.getNames().end()) {
                     int id1 = d_.getNames()[s1];
-                    for(auto connection : d_.getG().findVertex(id1)->getAdj()){
-                        cout << connection->getDest()->getStation() << "-" << connection->getDest()->getStation()->getName() << "\n";
+                    for (auto connection: d_.getG().findVertex(id1)->getAdj()) {
+                        cout << connection->getDest()->getId() << " - "
+                             << connection->getDest()->getStation()->getName() << "\n";
+                        ids.push_back(connection->getDest()->getId());
                     }
-                    cout << "Choose the number of the connecting station. \n";
+                    cout << "Choose the ID of the connecting station. \n";
+                    string s2;
+                    getline(cin, s2);
+                    int id2 = stoi(s2);
+                    if (find(ids.begin(), ids.end(), id2) != ids.end()) {
+                        ids.clear();
+                        lines.push_back({id1, id2});
+                    } else {
+                        cout << "You didn't chose a connecting station. Please choose one of the IDs above."
+                             << endl;
+                    }
                 }
-
-            //WIP
-
-
+            }
+            }
+            d_.getG().disableLines(lines);
+            cout << endl << "Lines removed" << endl;
         }
 
         else { //stations
@@ -374,11 +400,12 @@ void Interface::subgraph() {
             //pode receber várias stations. -> converter para int, adicionar a vetor/container
             bool flag = true;
             vector<int> v = {}; //vetor com IDs das stations recebidas como input
-
             while(flag){
                     string inp = "";
                     getline(cin, inp);
-                    if ( inp == "d") flag = false;
+                    if ( inp == "d") {
+                        flag = false;
+                    }
                     else{
                         if (d_.getNames().find(inp) != d_.getNames().end())
                             v.push_back(d_.getNames()[inp]);
@@ -386,14 +413,28 @@ void Interface::subgraph() {
                     }
             }
             d_.getG().disableStations(v);
+            v.clear();
             cout << "Stations removed." << endl;
             }
+
+
+        //Testing only
         for (auto i : d_.getG().findVertex(d_.getNames()["Faro"])->getAdj()){
-        cout << i->getOrig() << " " << i->getDest() << " " << i->getAvailable() << endl;
+        cout << i->getOrig() << " " << i->getDest() << " " << i->isAvailable() << endl;
         }
+
         cout << endl;
         for (auto i : d_.getG().findVertex(d_.getNames()["Faro"])->getIncoming()){
-            cout << i->getOrig() << " " << i->getDest() << " " << i->getAvailable() << endl;
+            cout << i->getOrig() << " " << i->getDest() << " " << i->isAvailable() << endl;
+        }
+        cout << endl;
+        for (auto i : d_.getG().findVertex(d_.getNames()["Viana do Castelo"])->getAdj()){
+            cout << i->getOrig() << " " << i->getDest() << " " << i->isAvailable() << endl;
+        }
+
+        cout << endl;
+        for (auto i : d_.getG().findVertex(d_.getNames()["Viana do Castelo"])->getIncoming()){
+            cout << i->getOrig() << " " << i->getDest() << " " << i->isAvailable() << endl;
         }
     }
 
@@ -409,18 +450,28 @@ void Interface::subgraph() {
         }
 
         else {
-            vector<int> res;
+            //vector<int> res;
             string k;
             int k2;
             vector <string> vec;
 
             switch (input[0]) {
 
-                case ('1'):
-                    //res = maxTrainsSubgraph;
-                    cout << "The max nr of trains is " << res[0] << "with the minimum cost of" << res[1] << endl;
+                case ('1'): {
+                    int res;
+                    string os, ds;
+                    int source, target;
+                    cout << "Type origin station:" << endl;
+                    getline(cin >> ws, os);
+                    cout << "Type destination station:" << endl;
+                    getline(cin >> ws, ds);
+                    source = d_.getNames()[os];
+                    target = d_.getNames()[ds];
+                    res = d_.getMaxFlowSub(source, target);
+                    cout << "The maximum number of trains that can simultaneously travel between " << os << " and " << ds << " is: " << res << endl;
+                    lastPage();
                     return subgraph();
-
+                }
                 case ('2'):
                     cout << "Choose the number of places for the 'top' station list: " << endl;
                     cin >> k;

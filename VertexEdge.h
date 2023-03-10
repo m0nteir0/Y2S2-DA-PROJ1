@@ -89,7 +89,7 @@ public:
     Edge *getReverse() const;
     double getFlow() const;
     string getService() const;
-    bool getAvailable() const;
+    bool isAvailable() const;
 
     void setSelected(bool selected);
     void setReverse(Edge *reverse);

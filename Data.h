@@ -41,6 +41,11 @@ public:
      pair<vector<pair<Station*,Station*>>,double> stationPairs();
      vector<pair<string, double>> topDistricts();
      double nrTrainsArriving(int id);
+
+    double getMaxFlowSub(int source, int target);
+    bool pathSub(int source, int target);
+
+
 };
 
 

@@ -117,6 +117,15 @@ void Graph::disableStations(vector<int> stations){
     }
 }
 
+void Graph::disableLines(vector<pair<int,int>> lines){
+    for (pair<int,int> p : lines){
+
+        Vertex* v = findVertex(p.first);
+        for (auto e : v->getAdj()) if (e->getDest()->getId() == p.second) {e->setAvailable(false); break;}
+        for (auto e : v->getIncoming()) if (e->getOrig()->getId() == p.second) {e->setAvailable(false); break;}
+    }
+}
+
 Graph::~Graph() {
     deleteMatrix(distMatrix, vertexSet.size());
     deleteMatrix(pathMatrix, vertexSet.size());

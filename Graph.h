@@ -40,6 +40,7 @@ public:
     bool addBidirectionalEdge(Vertex* v1, Vertex* v2, double w, string service);
 
     void disableStations(vector<int> stations);
+    void disableLines(vector<pair<int,int>> lines);
 
 
     int getNumVertex() const;
