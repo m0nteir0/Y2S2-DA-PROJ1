@@ -219,8 +219,8 @@ void Interface::full() {
                     source = d_.getNames()[os];
                     target = d_.getNames()[ds];
                     res = d_.getMaxFlow(source, target);
-                    cout << "The maximum number of trains that can simultaneously travel between" << os << " and " << ds
-                         << "is:" << res << endl;
+                    cout << "The maximum number of trains that can simultaneously travel between " << os << " and " << ds
+                         << " is: " << res << endl;
                     lastPage();
                     return full();
                 }
