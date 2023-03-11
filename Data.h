@@ -14,6 +14,13 @@
 #include "Station.h"
 #include "Graph.h"
 
+struct Result {
+    Station * s;
+    double dif;
+    int sumFlow;
+    int sumFlowSub;
+};
+
 using namespace std;
 class Data {
 private:
@@ -47,9 +54,12 @@ public:
      double nrTrainsArriving(int id);
      vector<int> trainSources();
 
+     //T4.1
     double getMaxFlowSub(int source, int target);
     bool pathSub(int source, int target);
 
+    //T4.2
+    vector<Result> topAffected(int k);
 
 };
 

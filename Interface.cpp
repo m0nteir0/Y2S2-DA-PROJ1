@@ -474,20 +474,25 @@ void Interface::subgraph() {
                     lastPage();
                     return subgraph();
                 }
-                case ('2'):
+                case ('2'): {
                     cout << "Choose the number of places for the 'top' station list: " << endl;
                     cin >> k;
                     k2 = stoi(k);
                     if (k2 < 0) cout << endl << "Not a valid number." << endl;
 
-                    //vec = topKSubgraph(int k);
+                    vector<Result> res = d_.topAffected(k2);
                     cout << "The top is: " << endl;
-                    for (int i = 0; i < vec.size(); i++) {
-                        cout << "-" << vec[i] << endl;
+                    for (int i = 0; i < res.size(); i++) {
+                        Result r = res[i];
+                        cout << (i+1) << "- "
+                        << r.s->getName() << ", " << r.s->getLine() << ": "
+                        << r.dif << "%\t"
+                        << r.sumFlow << "->" << r.sumFlowSub
+                        << endl;
                     }
                     lastPage();
                     return subgraph();
-
+                }
                 case ('e'):
                     return exitProgram();
                 case ('b'):

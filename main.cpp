@@ -2,7 +2,6 @@
 
 #include "Data.h"
 #include "Interface.h"
-
 int main() {
     Data d;
     bool a = d.readStations("../Data/Project1Data/stations.csv");
@@ -17,6 +16,7 @@ int main() {
             cout << "Nome: " << s->getName() << "\tLinha: " << s->getLine() << endl;
         }
     }
+
 
     cout << "Done";
     Interface iFace = Interface();

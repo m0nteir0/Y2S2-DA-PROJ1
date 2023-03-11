@@ -355,4 +355,47 @@ bool Data::pathSub(int source, int target) {
     }
     return false;
 }
+//100->90 -10%
+//3->0 -100%
+//T4.2
+bool comp(Result r1, Result r2){
+    return r1.dif > r2.dif || (r1.dif == r2.dif && r1.sumFlow > r2.sumFlow );
+}
 
+vector<Result> Data::topAffected(int k){
+    vector<Result> res;
+    Station * s;
+    int sumFlow = 0;
+    int sumFlowSub = 0;
+    double dif;
+    Result r;
+    for(auto  v1: g.getVertexSet()){
+        s = v1->getStation();
+        cout << s->getName() << ": ";
+        if (v1->getAdj().size() != 0) {
+            /*
+            for (auto v2: g.getVertexSet()) {
+                sumFlow += getMaxFlow(v1->getId(), v2->getId());
+                sumFlowSub += getMaxFlowSub(v1->getId(), v2->getId());
+            }
+            */
+            for (auto v2: trainSources()) {
+                sumFlow += getMaxFlow(v2, v1->getId());
+                sumFlowSub += getMaxFlowSub(v2, v1->getId());
+            }
+            cout << sumFlow << " | " << sumFlowSub << endl;
+            dif = ((sumFlow - sumFlowSub) * 1.0 / (sumFlow) * 1.0) * 100.0; //%
+            r = {s, dif, sumFlow, sumFlowSub};
+            res.push_back(r);
+
+            sumFlow = 0;
+            sumFlowSub = 0;
+        }
+        else cout << "Esta estação não tem qualquer ligação" << endl;
+    }
+    sort(res.begin(), res.end(), comp);
+    res.erase(res.begin()+k,res.end());
+    return res;
+}
+
+//só flow diferente
