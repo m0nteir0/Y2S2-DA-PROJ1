@@ -57,7 +57,7 @@ void Interface::welcomePage() {
     cout << endl << "Options:\n\t1-Read files\n\t2-Credits\n\te-Exit"<<endl;
     string input;
     while (true){
-        cout << "Choose option:";
+        cout << "choose option: ";
         getline( cin, input);
         //cout << endl << "Input: " << input << endl;
         if(input.size()>1){
@@ -99,7 +99,7 @@ void Interface::readFiles() {
     string input2;
 
     while (true){
-        cout << "Choose option:";
+        cout << "choose option: ";
         getline( cin, input);
         //cout << endl << "Input: " << input << endl;
         if(input.size()>1){
@@ -113,16 +113,14 @@ void Interface::readFiles() {
                     //d_.readNetworks(DEFAULT_NETWORKS);
                     mainMenu();
                 case ('2'):
-                    cout << endl << "Insert custom station file path:" << endl;
-                    cout << endl << "If you want default, write '-':" << endl;
+                    cout << endl << "Insert custom station file path (if you want default, write '-') : " << endl;
                     getline(cin, input2);
 
 
                     /*if (in != "-") d_.readStations(in);
                     else d_.readStations(DEFAULT_STATIONS);*/
 
-                    cout << endl << "Insert custom network file path:" << endl;
-                    cout << endl << "If you want default, write '-':" << endl;
+                    cout << endl << "Insert custom network file path (if you want default, write '-') : " << endl;
 /*
                 if (in != "-") d_.readNetworks(in);
                 else d_.readNetworks(DEFAULT_NETWORKS);*/
@@ -151,7 +149,7 @@ void Interface::mainMenu() {
     cout << endl << "Options:\n\t1-Full railway capacity\n\t2-Costs (depending on service type)\n\t3-Considering maintenance and line failures\n\te-Exit"<<endl;
     string input;
     while (true){
-        cout << "Choose option:";
+        cout << "choose option: ";
         getline( cin, input);
         //cout << endl << "Input: " << input << endl;
         if(input.size()>1){
@@ -188,10 +186,10 @@ void Interface::full() {
                     "2-Which pair(s) of stations require the most amount of trains [when taking full advantage of the existing network capacity]\n\t"
                     "3-Top-k municipalities and/or districts, regarding their transportation needs\n\t"
                     "4-Maximum number of trains that can simultaneously arrive at a given station"
-                    "b-Back\n\te-Exit"<<endl;
+                    "\n\tb-Back\n\te-Exit"<<endl;
     string input;
     while (true){
-        cout << "Choose option:";
+        cout << "choose option: ";
         getline( cin, input);
         //cout << endl << "Input: " << input << endl;
         if(input.size()>1){
@@ -219,8 +217,8 @@ void Interface::full() {
                     source = d_.getNames()[os];
                     target = d_.getNames()[ds];
                     res = d_.getMaxFlow(source, target);
-                    cout << "The maximum number of trains that can simultaneously travel between" << os << " and " << ds
-                         << "is:" << res << endl;
+                    cout << "The maximum number of trains that can simultaneously travel between " << os << " and " << ds
+                         << " is: " << res << endl;
                     lastPage();
                     return full();
                 }
@@ -297,10 +295,10 @@ void Interface::full() {
 
 void Interface::costs() {
     cout << endl << "=========COSTS REGARDING SERVICE TYPE (standard or alpha pendular) MENU=========" << endl;
-    cout << endl << "Options:\n\t1-Maximum amount of trains that can simultaneously travel between two specific stations with minimum cost for the company"<< endl;
+    cout << endl << "Options:\n\t1-Maximum amount of trains that can simultaneously travel between two specific stations with minimum cost for the company\n\tb-Back"<< endl;
     string input;
     while (true) {
-        cout << "Choose option:";
+        cout << "choose option: ";
         getline( cin, input);
         //cout << endl << "Input: " << input << endl;
         if(input.size()>1){
@@ -336,10 +334,10 @@ void Interface::subgraph() {
 
 
     cout << endl << "Do you want to type the affected LINE(S) or the affected STATION(S) to be cut off the railway network?" << endl;
-    cout << endl << "Options:\n\t1-Lines\n\t2-Stations" << endl;
+    cout << endl << "Options:\n\t1-Lines\n\t2-Stations\n\tb-Back" << endl;
 
     string input0;
-    cout << "Choose option:";
+    cout << "choose option: ";
     getline( cin, input0);
     cout << endl << "Input: " << input0 << endl;
 
@@ -350,8 +348,12 @@ void Interface::subgraph() {
 
     else {
 
+        if(input0[0]=='b'){
+            return mainMenu();
+        }
+
         if (input0[0] == '1') { //lines
-            cout << endl << "Type the affected lines(s) and hit 'd' when done.\\n\\n"
+            cout << endl << "Type the affected lines(s) and hit 'd' when done.\n\n"
                  << endl; //ver como receber isto depois
 
             string s1 = "";
@@ -392,7 +394,7 @@ void Interface::subgraph() {
             }
             }
             d_.getG().disableLines(lines);
-            cout << endl << "Lines removed" << endl;
+            cout << endl << "Lines removed." << endl;
         }
 
         else { //stations
@@ -442,7 +444,7 @@ void Interface::subgraph() {
     string input;
 
     while (true) {
-        cout << "Choose option:";
+        cout << "choose option: ";
         getline( cin, input);
         //cout << endl << "Input: " << input << endl;
         if(input.size()>1){
@@ -476,7 +478,7 @@ void Interface::subgraph() {
                     cout << "Choose the number of places for the 'top' station list: " << endl;
                     cin >> k;
                     k2 = stoi(k);
-                    if (k2 < 0) cout << endl << "Not a valid number" << endl;
+                    if (k2 < 0) cout << endl << "Not a valid number." << endl;
 
                     //vec = topKSubgraph(int k);
                     cout << "The top is: " << endl;
@@ -491,7 +493,7 @@ void Interface::subgraph() {
                 case ('b'):
                     return mainMenu();
                 default:
-                    cout << endl << "Not a valid option" << endl;
+                    cout << endl << "Not a valid option." << endl;
             }
         }
 
@@ -514,7 +516,7 @@ void Interface::credits() const {
     cout << endl << endl << "Options:\n\tb-Back\n\te-Exit"<< endl;
     string input;
     while (true) {
-        cout << "Choose option:";
+        cout << "choose option: ";
         getline( cin, input);
         //cout << endl << "Input: " << input << endl;
         if(input.size()>1){
@@ -545,7 +547,7 @@ void Interface::lastPage() const {
     cout << endl << "Options:\n\tb-Back\n\te-Exit"<<endl;
     string input;
     while (true){
-        cout << "Choose option:";
+        cout << "choose option: ";
         getline( cin, input);
         //cout << endl << "Input: " << input << endl;
         if(input.size()>1){

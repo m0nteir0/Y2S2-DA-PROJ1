@@ -10,7 +10,13 @@ int main() {
     cout << endl << a << endl;
     cout << b << endl;
     cout << d.getMaxFlow(2,6);
-
+    cout << "\n\n";
+    for (auto v : d.getG().getVertexSet()){
+        Station * s = v->getStation();
+        if (v->getAdj().size() == 1 && v->getIncoming().size() == 1){
+            cout << "Nome: " << s->getName() << "\tLinha: " << s->getLine() << endl;
+        }
+    }
 
     cout << "Done";
     Interface iFace = Interface();

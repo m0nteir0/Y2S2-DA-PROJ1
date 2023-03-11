@@ -33,14 +33,19 @@ public:
      bool readStations(string filename);
      bool readNetworks(string filename);
 
+     //T2.1
      double getMaxFlow(int source, int target);
      bool path(int source, int target);
      double findBottleneck(int target);
      void augmentPath(int target, double bottleneck);
 
+     //T2.2
      pair<vector<pair<Station*,Station*>>,double> stationPairs();
+     //T2.3
      vector<pair<string, double>> topDistricts();
+     //T2.4
      double nrTrainsArriving(int id);
+     vector<int> trainSources();
 
     double getMaxFlowSub(int source, int target);
     bool pathSub(int source, int target);

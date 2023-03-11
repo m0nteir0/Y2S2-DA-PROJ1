@@ -263,16 +263,32 @@ vector<pair<string, double>> Data::topDistricts() {
 
 //-----------------------------------
 
-/* T2.4 -> esta mal */
+/* T2.4 */ // -> CORRIGIR
 
 double Data::nrTrainsArriving(int id){
-    double res=0;
-    for(Edge* e : g.findVertex(id)->getIncoming()){
-        res += e->getWeight();
+    double res=0; //id -> target; s -> source (iterar por todas as possiveis sources do network)
+    vector<int> sources = trainSources();
+    //maxFlow()
+    for(int s : sources){
+        res += getMaxFlow(s, id);
     }
     return res;
 }
 
+vector<int> Data::trainSources(){
+    vector<int> srcs;
+    for (auto v : g.getVertexSet()) {
+        //Station *s = v->getStation();
+        if (v->getAdj().size() == 1 && v->getIncoming().size() == 1) {
+            //cout << "Nome: " << s->getName() << "\tLinha: " << s->getLine() << endl;
+            srcs.push_back(v->getId());
+        }
+    }
+    return srcs;
+}
+
+
+//----------------------------------
 /* T4.1 */
 
 double Data::getMaxFlowSub(int source, int target) {
