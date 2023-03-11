@@ -263,7 +263,7 @@ vector<pair<string, double>> Data::topDistricts() {
 
 //-----------------------------------
 
-/* T2.4 */
+/* T2.4 -> esta mal */
 
 double Data::nrTrainsArriving(int id){
     double res=0;
