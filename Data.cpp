@@ -287,6 +287,41 @@ vector<int> Data::trainSources(){
     return srcs;
 }
 
+//----------------------------------
+/* T3.1 */
+
+void Data::cheapestPath(int source, int target) {
+    for (Vertex* v : g.getVertexSet()){
+        v->setVisited(false);
+        v->setPath(nullptr);
+        v->setDist(std::numeric_limits<double>::max());
+    }
+
+    std::queue<int> s({source});
+    Vertex* source_vertex = g.findVertex(source);
+    source_vertex->setVisited(true);
+    source_vertex->setDist(0);
+    while (!s.empty()){
+        Vertex* v = g.findVertex(s.front());
+        for (Edge* e : v->getAdj()) {
+            if (e->getWeight() - e->getFlow() > 0) {
+                double dist = e->getOrig()->getDist() + (e->getService() == "STANDARD" ? 2 : 4);
+                if (!e->getDest()->isVisited()){
+                    e->getDest()->setDist(dist);
+                    e->getDest()->setVisited(true);
+                    e->getDest()->setPath(e);
+                    if (e->getDest()->getId() != target)
+                        s.push(e->getDest()->getId());
+                } else if (dist < e->getDest()->getDist()) {
+                    e->getDest()->setDist(dist);
+                    e->getDest()->setPath(e);
+                }
+            }
+        }
+        s.pop();
+    }
+}
+
 
 //----------------------------------
 /* T4.1 */

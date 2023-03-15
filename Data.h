@@ -54,6 +54,9 @@ public:
      double nrTrainsArriving(int id);
      vector<int> trainSources();
 
+     //T3.1
+     void cheapestPath(int source, int target);
+
      //T4.1
     double getMaxFlowSub(int source, int target);
     bool pathSub(int source, int target);
