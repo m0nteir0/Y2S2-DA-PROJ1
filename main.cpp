@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 
 #include "Data.h"
 #include "Interface.h"
@@ -10,13 +11,12 @@ int main() {
     cout << b << endl;
     cout << d.getMaxFlow(2,6);
     cout << "\n\n";
-    for (auto v : d.getG().getVertexSet()){
-        Station * s = v->getStation();
-        if (v->getAdj().size() == 1 && v->getIncoming().size() == 1){
-            cout << "Nome: " << s->getName() << "\tLinha: " << s->getLine() << endl;
-        }
-    }
 
+    vector<int> sources = d.trainSources();
+    for (int i : sources){
+        Vertex* v = d.getG().findVertex(i);
+        cout << setw(25) << v->getStation()->getName() << "\t" << v->getStation()->getLine() << endl;
+    }
 
     cout << "Done";
     Interface iFace = Interface();

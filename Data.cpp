@@ -277,11 +277,27 @@ double Data::nrTrainsArriving(int id){
 
 vector<int> Data::trainSources(){
     vector<int> srcs;
-    for (auto v : g.getVertexSet()) {
-        //Station *s = v->getStation();
-        if (v->getAdj().size() == 1 && v->getIncoming().size() == 1) {
-            //cout << "Nome: " << s->getName() << "\tLinha: " << s->getLine() << endl;
+
+    for (Vertex* v : g.getVertexSet())
+        v->setVisited(false);
+
+    for (Vertex* v : g.getVertexSet()) {
+        if (!v->isVisited() && v->getAdj().size() == 1 && v->getIncoming().size() == 1) {
+            v->setVisited(true);
             srcs.push_back(v->getId());
+        } else {
+            for (Edge* e : v->getAdj()){
+                if (!e->getDest()->isVisited() && !v->isVisited()
+                && v->getStation()->getLine() != e->getDest()->getStation()->getLine()){
+                    if (v->getAdj().size() >= e->getDest()->getAdj().size()) {
+                        v->setVisited(true);
+                        srcs.push_back(v->getId());
+                    } else{
+                        e->getDest()->setVisited(true);
+                        srcs.push_back(e->getDest()->getId());
+                    }
+                }
+            }
         }
     }
     return srcs;
