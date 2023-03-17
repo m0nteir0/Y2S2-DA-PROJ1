@@ -306,6 +306,22 @@ vector<int> Data::trainSources(){
 //----------------------------------
 /* T3.1 */
 
+pair<double, double> Data::maxTrainsCost(int source, int target){
+    cheapestPath(source, target);
+
+    Vertex* v = g.findVertex(target);
+    double bottleneck = std::numeric_limits<double>::max();
+    double cost = v->getDist();
+
+    while (v->getPath() != nullptr){
+        if (v->getPath()->getWeight() < bottleneck)
+            bottleneck = v->getPath()->getWeight();
+        v = v->getPath()->getOrig();
+    }
+
+    return {bottleneck, cost};
+}
+
 void Data::cheapestPath(int source, int target) {
     for (Vertex* v : g.getVertexSet()){
         v->setVisited(false);

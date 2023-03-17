@@ -55,6 +55,7 @@ public:
      vector<int> trainSources();
 
      //T3.1
+     pair<double,double> maxTrainsCost(int source, int target);
      void cheapestPath(int source, int target);
 
      //T4.1
