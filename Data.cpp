@@ -2,6 +2,7 @@
 // Created by Guilherme Monteiro on 03/03/2023.
 //
 
+#include <stack>
 #include "Data.h"
 
 bool Data::readStations(string filename) {
@@ -26,14 +27,6 @@ bool Data::readStations(string filename) {
                         getline(iss, field, ',');       //consume the comma
                     }
                 }
-                //========================================================
-                /*
-                cout << "Id: " << id << endl;
-                for (int i = 0; i< 5; i++){
-                    cout << " " << fields[i] << " |";
-                }
-                cout << endl;
-                */
 
                 name = fields[0];
                 district = fields[1];
@@ -136,7 +129,8 @@ double Data::getMaxFlow(int source, int target) {
     }
 
     double bottleneck;
-    while (path(source, target)){
+    queue<int> s({source});
+    while (path(s, target)){
         bottleneck = findBottleneck(target);
         augmentPath(target, bottleneck);
     }
@@ -148,16 +142,15 @@ double Data::getMaxFlow(int source, int target) {
     return maxFlow;
 }
 
-bool Data::path(int source, int target) {
+bool Data::path(queue<int> s, int target) {
     for (Vertex* v : g.getVertexSet()){
         v->setVisited(false);
         v->setPath(nullptr);
     }
 
-    std::queue<int> s({source});
-    g.findVertex(source)->setVisited(true);
     while (!s.empty()){
         Vertex* v = g.findVertex(s.front());
+        v->setVisited(true);
         for (Edge* e : v->getAdj()) {
             if (!e->getDest()->isVisited() && e->getWeight() - e->getFlow() > 0) {
                 s.push(e->getDest()->getId());
@@ -265,42 +258,39 @@ vector<pair<string, double>> Data::topDistricts() {
 
 /* T2.4 */ // -> CORRIGIR
 
-double Data::nrTrainsArriving(int id){
+double Data::nrTrainsArriving(int id){/*
     double res=0; //id -> target; s -> source (iterar por todas as possiveis sources do network)
     vector<int> sources = trainSources();
     //maxFlow()
     for(int s : sources){
         res += getMaxFlow(s, id);
     }
-    return res;
+    return res;*/
 }
 
-vector<int> Data::trainSources(){
-    vector<int> srcs;
-
+void Data::findTrainSources(){
     for (Vertex* v : g.getVertexSet())
         v->setVisited(false);
 
     for (Vertex* v : g.getVertexSet()) {
         if (!v->isVisited() && v->getAdj().size() == 1 && v->getIncoming().size() == 1) {
             v->setVisited(true);
-            srcs.push_back(v->getId());
+            trainSources.push(v->getId());
         } else {
-            for (Edge* e : v->getAdj()){
+            for (Edge *e: v->getAdj()) {
                 if (!e->getDest()->isVisited() && !v->isVisited()
-                && v->getStation()->getLine() != e->getDest()->getStation()->getLine()){
+                    && v->getStation()->getLine() != e->getDest()->getStation()->getLine()) {
                     if (v->getAdj().size() >= e->getDest()->getAdj().size()) {
                         v->setVisited(true);
-                        srcs.push_back(v->getId());
-                    } else{
+                        trainSources.push(v->getId());
+                    } else {
                         e->getDest()->setVisited(true);
-                        srcs.push_back(e->getDest()->getId());
+                        trainSources.push(e->getDest()->getId());
                     }
                 }
             }
         }
     }
-    return srcs;
 }
 
 //----------------------------------
@@ -440,16 +430,12 @@ vector<Result> Data::topAffected(int k){
         s = v1->getStation();
         cout << s->getName() << ": ";
         if (v1->getAdj().size() != 0) {
-            /*
-            for (auto v2: g.getVertexSet()) {
-                sumFlow += getMaxFlow(v1->getId(), v2->getId());
-                sumFlowSub += getMaxFlowSub(v1->getId(), v2->getId());
-            }
-            */
+            /* CORRIGIR
             for (auto v2: trainSources()) {
                 sumFlow += getMaxFlow(v2, v1->getId());
                 sumFlowSub += getMaxFlowSub(v2, v1->getId());
             }
+             */
             cout << sumFlow << " | " << sumFlowSub << endl;
             dif = ((sumFlow - sumFlowSub) * 1.0 / (sumFlow) * 1.0) * 100.0; //%
             r = {s, dif, sumFlow, sumFlowSub};
