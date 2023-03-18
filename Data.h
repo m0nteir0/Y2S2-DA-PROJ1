@@ -17,8 +17,8 @@
 struct Result {
     Station * s;
     double dif;
-    int sumFlow;
-    int sumFlowSub;
+    double sumFlow;
+    double sumFlowSub;
 };
 
 using namespace std;
@@ -45,7 +45,7 @@ public:
      void findTrainSources();
 
      //T2.1
-     double getMaxFlow(int source, int target);
+     double getMaxFlow(queue<int> source, int target);
      bool path(queue<int> source, int target);
      double findBottleneck(int target);
      void augmentPath(int target, double bottleneck);
@@ -55,15 +55,15 @@ public:
      //T2.3
      vector<pair<string, double>> topDistricts();
      //T2.4
-     double nrTrainsArriving(int id);
+     double nrTrainsArriving(int target);
 
      //T3.1
      pair<double,double> maxTrainsCost(int source, int target);
      void cheapestPath(int source, int target);
 
      //T4.1
-    double getMaxFlowSub(int source, int target);
-    bool pathSub(int source, int target);
+    double getMaxFlowSub(queue<int> source, int target);
+    bool pathSub(queue<int> source, int target);
 
     //T4.2
     vector<Result> topAffected(int k);

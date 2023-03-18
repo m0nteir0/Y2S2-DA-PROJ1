@@ -216,7 +216,7 @@ void Interface::full() {
                     getline(cin >> ws, ds);
                     source = d_.getNames()[os];
                     target = d_.getNames()[ds];
-                    res = d_.getMaxFlow(source, target);
+                    res = d_.getMaxFlow(queue<int>({source}), target);
                     cout << "The maximum number of trains that can simultaneously travel between " << os << " and " << ds
                          << " is: " << res << endl;
                     lastPage();
@@ -469,7 +469,7 @@ void Interface::subgraph() {
                     getline(cin >> ws, ds);
                     source = d_.getNames()[os];
                     target = d_.getNames()[ds];
-                    res = d_.getMaxFlowSub(source, target);
+                    res = d_.getMaxFlowSub(queue<int>({source}), target);
                     cout << "The maximum number of trains that can simultaneously travel between " << os << " and " << ds << " is: " << res << endl;
                     lastPage();
                     return subgraph();
