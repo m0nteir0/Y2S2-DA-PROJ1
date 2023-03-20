@@ -333,18 +333,16 @@ void Data::cheapestPath(int source, int target) {
     while (!s.empty()){
         Vertex* v = g.findVertex(s.front());
         for (Edge* e : v->getAdj()) {
-            if (e->getWeight() - e->getFlow() > 0) {
-                double dist = e->getOrig()->getDist() + (e->getService() == "STANDARD" ? 2 : 4);
-                if (!e->getDest()->isVisited()){
-                    e->getDest()->setDist(dist);
-                    e->getDest()->setVisited(true);
-                    e->getDest()->setPath(e);
-                    if (e->getDest()->getId() != target)
-                        s.push(e->getDest()->getId());
-                } else if (dist < e->getDest()->getDist()) {
-                    e->getDest()->setDist(dist);
-                    e->getDest()->setPath(e);
-                }
+            double dist = e->getOrig()->getDist() + (e->getService() == "STANDARD" ? 2 : 4);
+            if (!e->getDest()->isVisited()){
+                e->getDest()->setDist(dist);
+                e->getDest()->setVisited(true);
+                e->getDest()->setPath(e);
+                if (e->getDest()->getId() != target)
+                    s.push(e->getDest()->getId());
+            } else if (dist < e->getDest()->getDist()) {
+                e->getDest()->setDist(dist);
+                e->getDest()->setPath(e);
             }
         }
         s.pop();
@@ -438,7 +436,7 @@ vector<Result> Data::topAffected(int k){
         if (v1->getAdj().size() != 0) {
             sumFlow += getMaxFlow(trainSources, v1->getId());
             sumFlowSub += getMaxFlowSub(trainSources, v1->getId());
-            /* CORRIGIR
+            /* OLD
             for (auto v2: trainSources()) {
                 sumFlow += getMaxFlow(v2, v1->getId());
                 sumFlowSub += getMaxFlowSub(v2, v1->getId());
