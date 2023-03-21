@@ -10,7 +10,6 @@ int main() {
     d.findTrainSources();
     cout << endl << a << endl;
     cout << b << endl;
-    cout << d.getMaxFlow(2,6);
     cout << "\n\n";
 
     cout << "Done";

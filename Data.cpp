@@ -113,7 +113,7 @@ map<string, int> Data::getNames() const {
     return names;
 }
 
-double Data::getMaxFlow(int source, int target) {
+double Data::getMaxFlow(queue<int> source, int target) {
     for (Vertex* v : g.getVertexSet()){
         for (Edge* e : v->getAdj()){
             e->setFlow(0);
@@ -129,8 +129,7 @@ double Data::getMaxFlow(int source, int target) {
     }
 
     double bottleneck;
-    queue<int> s({source});
-    while (path(s, target)){
+    while (path(source, target)){
         bottleneck = findBottleneck(target);
         augmentPath(target, bottleneck);
     }
@@ -211,7 +210,7 @@ pair<vector<pair<Station*,Station*>>,double> Data::stationPairs(){
 
     for(int i1=1; i1<g.getNumVertex(); i1++){
         for (int i2=i1+1; i2<=g.getNumVertex(); i2++){
-            double val = getMaxFlow(i1,i2);
+            double val = getMaxFlow(queue<int>({i1}),i2);
             if (val > max){
                 estacoes.clear();
                 max = val;
@@ -240,7 +239,7 @@ vector<pair<string, double>> Data::topDistricts() {
             if (district1 == district){
                 for (int j = i + 1; j <= g.getNumVertex(); j++){
                     if (district1 == g.findVertex(j)->getStation()->getDistrict()){
-                        district_flow += getMaxFlow(i, j);
+                        district_flow += getMaxFlow(queue<int>({i}), j);
                         station_count++;
                     }
                 }
@@ -256,16 +255,24 @@ vector<pair<string, double>> Data::topDistricts() {
 
 //-----------------------------------
 
-/* T2.4 */ // -> CORRIGIR
+/* T2.4 */
 
-double Data::nrTrainsArriving(int id){/*
-    double res=0; //id -> target; s -> source (iterar por todas as possiveis sources do network)
-    vector<int> sources = trainSources();
-    //maxFlow()
-    for(int s : sources){
-        res += getMaxFlow(s, id);
+double Data::nrTrainsArriving(int target){
+    for (Vertex* v : g.getVertexSet())
+        for (Edge* e : v->getAdj())
+            e->setFlow(0);
+
+    double bottleneck;
+    while (path(trainSources, target)){
+        bottleneck = findBottleneck(target);
+        augmentPath(target, bottleneck);
     }
-    return res;*/
+
+    double trainsArriving = 0;
+    Vertex* sink = g.findVertex(target);
+    for (Edge* e : sink->getIncoming())
+        trainsArriving += e->getFlow();
+    return trainsArriving;
 }
 
 void Data::findTrainSources(){
@@ -326,18 +333,16 @@ void Data::cheapestPath(int source, int target) {
     while (!s.empty()){
         Vertex* v = g.findVertex(s.front());
         for (Edge* e : v->getAdj()) {
-            if (e->getWeight() - e->getFlow() > 0) {
-                double dist = e->getOrig()->getDist() + (e->getService() == "STANDARD" ? 2 : 4);
-                if (!e->getDest()->isVisited()){
-                    e->getDest()->setDist(dist);
-                    e->getDest()->setVisited(true);
-                    e->getDest()->setPath(e);
-                    if (e->getDest()->getId() != target)
-                        s.push(e->getDest()->getId());
-                } else if (dist < e->getDest()->getDist()) {
-                    e->getDest()->setDist(dist);
-                    e->getDest()->setPath(e);
-                }
+            double dist = e->getOrig()->getDist() + (e->getService() == "STANDARD" ? 2 : 4);
+            if (!e->getDest()->isVisited()){
+                e->getDest()->setDist(dist);
+                e->getDest()->setVisited(true);
+                e->getDest()->setPath(e);
+                if (e->getDest()->getId() != target)
+                    s.push(e->getDest()->getId());
+            } else if (dist < e->getDest()->getDist()) {
+                e->getDest()->setDist(dist);
+                e->getDest()->setPath(e);
             }
         }
         s.pop();
@@ -348,7 +353,7 @@ void Data::cheapestPath(int source, int target) {
 //----------------------------------
 /* T4.1 */
 
-double Data::getMaxFlowSub(int source, int target) {
+double Data::getMaxFlowSub(queue<int> source, int target) {
     for (Vertex* v : g.getVertexSet()){
         for (Edge* e : v->getAdj()){
             e->setFlow(0);
@@ -376,16 +381,15 @@ double Data::getMaxFlowSub(int source, int target) {
     return maxFlow;
 }
 
-bool Data::pathSub(int source, int target) {
+bool Data::pathSub(queue<int> s, int target) {
     for (Vertex* v : g.getVertexSet()){
         v->setVisited(false);
         v->setPath(nullptr);
     }
 
-    std::queue<int> s({source});
-    g.findVertex(source)->setVisited(true);
     while (!s.empty()){
         Vertex* v = g.findVertex(s.front());
+        v->setVisited(true);
         for (Edge* e : v->getAdj()) {
             if (!e->getDest()->isVisited() && e->getWeight() - e->getFlow() > 0 && e->isAvailable()) {
                 s.push(e->getDest()->getId());
@@ -422,15 +426,17 @@ bool comp(Result r1, Result r2){
 vector<Result> Data::topAffected(int k){
     vector<Result> res;
     Station * s;
-    int sumFlow = 0;
-    int sumFlowSub = 0;
+    double sumFlow = 0;
+    double sumFlowSub = 0;
     double dif;
     Result r;
     for(auto  v1: g.getVertexSet()){
         s = v1->getStation();
         cout << s->getName() << ": ";
         if (v1->getAdj().size() != 0) {
-            /* CORRIGIR
+            sumFlow += getMaxFlow(trainSources, v1->getId());
+            sumFlowSub += getMaxFlowSub(trainSources, v1->getId());
+            /* OLD
             for (auto v2: trainSources()) {
                 sumFlow += getMaxFlow(v2, v1->getId());
                 sumFlowSub += getMaxFlowSub(v2, v1->getId());
