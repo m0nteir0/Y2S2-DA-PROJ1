@@ -149,6 +149,10 @@ bool Data::path(queue<int> s, int target) {
 
     while (!s.empty()){
         Vertex* v = g.findVertex(s.front());
+        if (v->getId() == target){
+            s.pop();
+            continue;
+        }
         v->setVisited(true);
         for (Edge* e : v->getAdj()) {
             if (!e->getDest()->isVisited() && e->getWeight() - e->getFlow() > 0) {
@@ -229,6 +233,30 @@ pair<vector<pair<Station*,Station*>>,double> Data::stationPairs(){
 
 //--------------------------
 /* T2.3 */
+vector<pair<string, double>> Data::topMunicipalities() {
+    vector<pair<string, double>> res;
+    for (const string& municipality : municipalities){
+        double municipality_flow = 0;
+        int station_count = 0;
+        for (int i = 1; i < g.getNumVertex(); i++){
+            string municipality1 = g.findVertex(i)->getStation()->getMunicipality();
+            if (municipality == municipality1){
+                for (int j = i + 1; j <= g.getNumVertex(); j++){
+                    if (municipality1 == g.findVertex(j)->getStation()->getMunicipality()){
+                        municipality_flow += getMaxFlow(queue<int>({i}), j);
+                        station_count++;
+                    }
+                }
+            }
+        }
+        if (municipality_flow > 0 && station_count > 0)
+            res.push_back({municipality, municipality_flow / station_count});
+    }
+    std::sort(res.begin(), res.end(), [](const pair<string, double> p1, const pair<string, double> p2){return p1.second > p2.second;});
+
+    return res;
+}
+
 vector<pair<string, double>> Data::topDistricts() {
     vector<pair<string, double>> res;
     for (const string& district : districts){
@@ -389,6 +417,10 @@ bool Data::pathSub(queue<int> s, int target) {
 
     while (!s.empty()){
         Vertex* v = g.findVertex(s.front());
+        if (v->getId() == target){
+            s.pop();
+            continue;
+        }
         v->setVisited(true);
         for (Edge* e : v->getAdj()) {
             if (!e->getDest()->isVisited() && e->getWeight() - e->getFlow() > 0 && e->isAvailable()) {

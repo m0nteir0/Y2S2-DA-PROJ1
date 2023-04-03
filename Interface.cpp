@@ -252,8 +252,10 @@ void Interface::full() {
                     if (k2 < 0) cout << endl << "Not a valid number" << endl;
 
                     switch (in) {
-                        case ('1'): //vec = topM(k2);
+                        case ('1'): {
+                            vector<pair<string, double>> a = d_.topMunicipalities();
                             break;
+                        }
                         case ('2'): {
                             vector<pair<string, double>> a = d_.topDistricts();
                             break;

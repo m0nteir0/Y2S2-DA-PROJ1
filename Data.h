@@ -53,6 +53,7 @@ public:
      //T2.2
      pair<vector<pair<Station*,Station*>>,double> stationPairs();
      //T2.3
+     vector<pair<string, double>> topMunicipalities();
      vector<pair<string, double>> topDistricts();
      //T2.4
      double nrTrainsArriving(int target);
