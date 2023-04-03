@@ -303,21 +303,23 @@ bool Interface::full() {
                     }
                     break;
                 case ('4'): {
-                    string station;
-                    cout << "Type the name of the station:" << endl;
-                    getline(cin, station);
-                    int id;
+                    map<string, int> names = d_.getNames();
 
-                    if (d_.getNames().find(station) != d_.getNames().end())
-                        id = d_.getNames()[station];
-                    else {
-                        cout << "Invalid Station\n";
-                        break;
+                    while (true){
+                        cout << "Type name of the station:" << endl;
+                        getline(cin, os);
+
+                        auto s = names.find(os);
+                        if (s != names.end()) {
+                            source = (*s).second;
+                            break;
+                        }
+                        else cout << "Invalid Station\n";
                     }
 
-                    double res = d_.nrTrainsArriving(id);
+                    double res = d_.nrTrainsArriving(source);
 
-                    cout << "The maximum number of trains that can simultaneously arrive at " << station << " is: " << res;
+                    cout << "The maximum number of trains that can simultaneously arrive at " << os << " is: " << res;
                     break;
                 }
                 case ('e'):
