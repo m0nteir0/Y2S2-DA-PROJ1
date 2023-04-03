@@ -209,13 +209,32 @@ bool Interface::full() {
             switch (input[0]) {
                 case ('1'): {
                     double res;
-                    cout << "Type origin station:" << endl;
-                    getline(cin, os);
-                    cout << "Type destination station:" << endl;
-                    getline(cin, ds);
+                    map<string, int> names = d_.getNames();
 
-                    source = d_.getNames()[os];
-                    target = d_.getNames()[ds];
+                    while (true){
+                        cout << "Type origin station:" << endl;
+                        getline(cin, os);
+
+                        auto s = names.find(os);
+                        if (s != names.end()) {
+                            source = (*s).second;
+                            break;
+                        }
+                        else cout << "Invalid Station\n";
+                    }
+
+                    while (true) {
+                        cout << "Type destination station:" << endl;
+                        getline(cin, ds);
+
+                        auto t = names.find(ds);
+                        if (t != names.end()) {
+                            target = (*t).second;
+                            break;
+                        }
+                        else cout << "Invalid Station\n";
+                    }
+
                     res = d_.getMaxFlow(queue<int>({source}), target);
                     cout << "The maximum number of trains that can simultaneously travel between " << os << " and " << ds
                          << " is: " << res << endl;
@@ -287,8 +306,15 @@ bool Interface::full() {
                     string station;
                     cout << "Type the name of the station:" << endl;
                     getline(cin, station);
+                    int id;
 
-                    int id = d_.getNames()[station];
+                    if (d_.getNames().find(station) != d_.getNames().end())
+                        id = d_.getNames()[station];
+                    else {
+                        cout << "Invalid Station\n";
+                        break;
+                    }
+
                     double res = d_.nrTrainsArriving(id);
 
                     cout << "The maximum number of trains that can simultaneously arrive at " << station << " is: " << res;
@@ -323,14 +349,32 @@ bool Interface::costs() {
                     pair<double, double> res;
                     string os, ds;
                     int source, target;
+                    map<string, int> names = d_.getNames();
 
-                    cout << "Type origin station:" << endl;
-                    getline(cin, os);
-                    cout << "Type destination station:" << endl;
-                    getline(cin, ds);
+                    while (true){
+                        cout << "Type origin station:" << endl;
+                        getline(cin, os);
 
-                    source = d_.getNames()[os];
-                    target = d_.getNames()[ds];
+                        auto s = names.find(os);
+                        if (s != names.end()) {
+                            source = (*s).second;
+                            break;
+                        }
+                        else cout << "Invalid Station\n";
+                    }
+
+                    while (true) {
+                        cout << "Type destination station:" << endl;
+                        getline(cin, ds);
+
+                        auto t = names.find(ds);
+                        if (t != names.end()) {
+                            target = (*t).second;
+                            break;
+                        }
+                        else cout << "Invalid Station\n";
+                    }
+
                     res = d_.maxTrainsCost(source, target);
 
                     cout << "\nThe max number of trains is " << res.first << " with the minimum cost of " << res.second << endl;
@@ -500,14 +544,32 @@ bool Interface::subgraphAnalyze() {
                     double res;
                     string os, ds;
                     int source, target;
+                    map<string, int> names = d_.getNames();
 
-                    cout << "Type origin station:" << endl;
-                    getline(cin, os);
-                    cout << "Type destination station:" << endl;
-                    getline(cin, ds);
+                    while (true){
+                        cout << "Type origin station:" << endl;
+                        getline(cin, os);
 
-                    source = d_.getNames()[os];
-                    target = d_.getNames()[ds];
+                        auto s = names.find(os);
+                        if (s != names.end()) {
+                            source = (*s).second;
+                            break;
+                        }
+                        else cout << "Invalid Station\n";
+                    }
+
+                    while (true) {
+                        cout << "Type destination station:" << endl;
+                        getline(cin, ds);
+
+                        auto t = names.find(ds);
+                        if (t != names.end()) {
+                            target = (*t).second;
+                            break;
+                        }
+                        else cout << "Invalid Station\n";
+                    }
+
                     res = d_.getMaxFlowSub(queue<int>({source}), target);
                     cout << "The maximum number of trains that can simultaneously travel between "
                          << os << " and " << ds << " is: " << res << endl;
