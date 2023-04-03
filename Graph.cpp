@@ -126,6 +126,14 @@ void Graph::disableLines(vector<pair<int,int>> lines){
     }
 }
 
+void Graph::resetLines(){
+    for(auto v : vertexSet){
+        for(auto e : v->getAdj()){
+            e->setAvailable(true);
+        }
+    }
+}
+
 Graph::~Graph() {
     deleteMatrix(distMatrix, vertexSet.size());
     deleteMatrix(pathMatrix, vertexSet.size());

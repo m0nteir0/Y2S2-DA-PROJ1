@@ -41,6 +41,7 @@ public:
 
     void disableStations(vector<int> stations);
     void disableLines(vector<pair<int,int>> lines);
+    void resetLines();
 
 
     int getNumVertex() const;

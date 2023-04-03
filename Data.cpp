@@ -111,6 +111,12 @@ map<string, int> Data::getNames() const {
     return names;
 }
 
+/**
+ * Retorna o flow máximo (ou seja, número máximo de comboios) que podem atravessar o percurso de 'source' até 'target' (argumentos fornecidos).
+ * @param source id do vértice de partida (relacionado com uma dada estação)
+ * @param target id do vértice de destino (relacionado com uma dada estação)
+ * @return valor double correspondente ao numero maximo de comboios que podem atravessar o dado percurso
+ */
 double Data::getMaxFlow(queue<int> source, int target) {
     for (Vertex* v : g.getVertexSet()){
         for (Edge* e : v->getAdj()){
@@ -139,6 +145,12 @@ double Data::getMaxFlow(queue<int> source, int target) {
     return maxFlow;
 }
 
+/**
+ * Retorna verdadeiro ou falso, consoante a possivel existencia de um percurso até ao vertex de id 'target' (estação de destino). Caso exista, define esse caminho através do parâmetro 'path' dos vértices do grafo.
+ * @param s queue de valores inteiros que correspondem aos ids
+ * @param target id do vértice de destino (relacionado com uma dada estação)
+ * @return valor booleano correspondente à existencia de um percurso até ao vertex de id 'target' (estação de destino)
+ */
 bool Data::path(queue<int> s, int target) {
     for (Vertex* v : g.getVertexSet()){
         v->setVisited(false);
@@ -179,6 +191,11 @@ bool Data::path(queue<int> s, int target) {
     return false;
 }
 
+/**
+ * Retorna o 'bottleneck' do percurso, ou seja, o flow máximo (numero máximo de comboios) que podem atravessar o percurso, tendo em conta a capacidade minima de todas as capacidades dos edges do percurso.
+ * @param target id do vértice de destino (relacionado com uma dada estação)
+ * @return valor double correspondente ao bottleneck, número maximo de comboios que podem atravessar o dado percurso
+ */
 double Data::findBottleneck(int target) {
     Vertex* v = g.findVertex(target);
     double bottleneck = std::numeric_limits<double>::max();
@@ -191,6 +208,11 @@ double Data::findBottleneck(int target) {
     return bottleneck;
 }
 
+/**
+ * Altera o flow das edges, ou seja, o numero de comboios que podem atravessar nas linhas, tendo em consideração a bottleneck.
+ * @param target id do vértice de destino (relacionado com uma dada estação)
+ * @param bottleneck
+ */
 void Data::augmentPath(int target, double bottleneck) {
     Vertex* v = g.findVertex(target);
     while (v->getPath() != nullptr){
@@ -205,6 +227,10 @@ void Data::augmentPath(int target, double bottleneck) {
 
 //--------------------------
 /* T2.2 */
+/**
+ * Determina, de todos os pares de estações, qual(ais) requer(em) maior numero de comboios, tendo em conta a capacidade de toda a rede.
+ * @return par de vetores de pares de estações que requerem o valor maximo de toda a rede
+ */
 pair<vector<pair<Station*,Station*>>,double> Data::stationPairs(){
     double max = 0;
     Station* s1; Station* s2;
@@ -231,6 +257,10 @@ pair<vector<pair<Station*,Station*>>,double> Data::stationPairs(){
 
 //--------------------------
 /* T2.3 */
+/**
+ * Indica onde se deve atribuir maiores orçamentos para a compra e manutenção de comboios e lista os municípios mais relevantes, em relação às suas necessidades de transporte.
+ * @return vetor de pares de string (nomes dos municípios) e double (media de comboios que passa em cada estação do município) com maior necessidade
+ */
 vector<pair<string, double>> Data::topMunicipalities() {
     vector<pair<string, double>> res;
     for (const string& municipality : municipalities){
@@ -255,6 +285,10 @@ vector<pair<string, double>> Data::topMunicipalities() {
     return res;
 }
 
+/**
+ * Indica onde se deve atribuir maiores orçamentos para a compra e manutenção de comboios e lista os distritos mais relevantes, em relação às suas necessidades de transporte.
+ * @return vetor de pares de string (nomes dos distritos) e double (media de comboios que passa em cada estação do distrito) com maior necessidade
+ */
 vector<pair<string, double>> Data::topDistricts() {
     vector<pair<string, double>> res;
     for (const string& district : districts){
@@ -282,7 +316,11 @@ vector<pair<string, double>> Data::topDistricts() {
 //-----------------------------------
 
 /* T2.4 */
-
+/**
+ * Indica o número máximo de comboios que podem chegar simultaneamente a uma dada estação, tendo em consideração toda a rede ferroviária.
+ * @param target valor inteiro correspondente ao ID da estação a considerar como destino
+ * @return valor double correspondente ao número máximo de comboios que podem chegar simultaneamente à estação fornecida
+ */
 double Data::nrTrainsArriving(int target){
     for (Vertex* v : g.getVertexSet())
         for (Edge* e : v->getAdj())
@@ -301,6 +339,9 @@ double Data::nrTrainsArriving(int target){
     return trainsArriving;
 }
 
+/**
+ * Determina as estações da rede ferroviária que são fontes de comboios, neste caso, são os 'extremos' das linhas. Acrescenta-as ao vetor 'trainSources' da objeto do tipo Data.
+ */
 void Data::findTrainSources(){
     for (Vertex* v : g.getVertexSet())
         v->setVisited(false);
@@ -329,6 +370,12 @@ void Data::findTrainSources(){
 //----------------------------------
 /* T3.1 */
 
+/**
+ * Calcula o número máximo de comboios que podem viajar simultaneamente entre duas estações específicas com o custo mínimo.
+ * @param source id do vértice de partida (relacionado com uma dada estação)
+ * @param target id do vértice de destino (relacionado com uma dada estação)
+ * @return par de valores double correspondentes ao 'bottleneck' (numero maximo de comboios que pode atravessar o percurso) e custo ,respetivamente
+ */
 pair<double, double> Data::maxTrainsCost(int source, int target){
     cheapestPath(source, target);
 

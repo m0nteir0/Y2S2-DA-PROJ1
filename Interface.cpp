@@ -435,7 +435,7 @@ bool Interface::disableSegments() {
         cout << endl << "=========DISABLE SEGMENTS=========" << endl;
         cout << "Do you want to type the affected LINE(S) or the affected STATION(S) to be cut off the railway network?"
              << endl;
-        cout << endl << "Options:\n\t1-Lines\n\t2-Stations\n\tb-Back\n\te-Exit" << endl;
+        cout << endl << "Options:\n\t1-Lines\n\t2-Stations\n\t3-Reset\n\tb-Back\n\te-Exit" << endl;
 
         string input0;
         cout << "choose option: ";
@@ -518,6 +518,9 @@ bool Interface::disableSegments() {
                     cout << "Stations removed." << endl;
                     return false;
                 }
+                case '3':
+                    d_.getG().resetLines();
+                    return false;
                 default:
                     cout << endl << "Not a valid option" << endl;
             }
