@@ -4,26 +4,28 @@
 #include "Data.h"
 
 using namespace std;
+
 class Interface {
 
-public:
+private:
     Data d_;
 
-    void setData(Data d){d_ = d;}
+public:
 
     Interface();
     void welcomePage();
     void mainMenu();
-    void readFiles();
+    bool readFiles();
 
 
-    void full();
-    void costs();
-    void subgraph();
+    bool full();
+    bool costs();
+    bool subgraph();
 
-    void exitProgram() const;
-    void lastPage() const;
-    void credits() const;
+    bool disableSegments();
+    bool subgraphAnalyze();
+
+    bool credits() const;
 
 };
 

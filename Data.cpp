@@ -1,7 +1,3 @@
-//
-// Created by Guilherme Monteiro on 03/03/2023.
-//
-
 #include <stack>
 #include "Data.h"
 
@@ -46,13 +42,14 @@ bool Data::readStations(string filename) {
                 }
                 fields.clear();
             }
+            stations = filename;
             return true;
-        } else cout << "\nFile content is incorrect. Please submit the right file.\n";
-    } else cout << "\nCould not open the selected file\n";
+        } else cout << "\nFile content for " << filename << " is incorrect. Please submit the right file.\n";
+    } else cout << "\nCould not open " << filename << endl;
     return false;
 }
 
-bool Data::readNetworks(std::string filename) {
+bool Data::readNetwork(std::string filename) {
     ifstream input(filename);
     string labels = "Station_A,Station_B,Capacity,Service";
     if (input.is_open()){
@@ -95,9 +92,10 @@ bool Data::readNetworks(std::string filename) {
                     //return false;
                 }
             }
+            network = filename;
             return true;
-        } else cout << "\nFile content is incorrect. Please submit the right file.\n";
-    } else cout << "\nCould not open the selected file\n";
+        } else cout << "\nFile content for " << filename << " is incorrect. Please submit the right file.\n";
+    } else cout << "\nCould not open " << filename << endl;
     return false;
 }
 
@@ -458,35 +456,30 @@ bool comp(Result r1, Result r2){
 vector<Result> Data::topAffected(int k){
     vector<Result> res;
     Station * s;
-    double sumFlow = 0;
-    double sumFlowSub = 0;
+    double sumFlow, sumFlowSub;
     double dif;
-    Result r;
+
     for(auto  v1: g.getVertexSet()){
         s = v1->getStation();
-        cout << s->getName() << ": ";
         if (v1->getAdj().size() != 0) {
-            sumFlow += getMaxFlow(trainSources, v1->getId());
-            sumFlowSub += getMaxFlowSub(trainSources, v1->getId());
-            /* OLD
-            for (auto v2: trainSources()) {
-                sumFlow += getMaxFlow(v2, v1->getId());
-                sumFlowSub += getMaxFlowSub(v2, v1->getId());
-            }
-             */
-            cout << sumFlow << " | " << sumFlowSub << endl;
-            dif = ((sumFlow - sumFlowSub) * 1.0 / (sumFlow) * 1.0) * 100.0; //%
-            r = {s, dif, sumFlow, sumFlowSub};
-            res.push_back(r);
+            sumFlow = getMaxFlow(trainSources, v1->getId());
+            sumFlowSub = getMaxFlowSub(trainSources, v1->getId());
 
-            sumFlow = 0;
-            sumFlowSub = 0;
+            dif = ((sumFlow - sumFlowSub) * 1.0 / (sumFlow) * 1.0) * 100.0; //%
+            res.push_back({s, dif, sumFlow, sumFlowSub});
         }
-        else cout << "Esta estação não tem qualquer ligação" << endl;
     }
     sort(res.begin(), res.end(), comp);
     res.erase(res.begin()+k,res.end());
     return res;
+}
+
+const string &Data::getStations() const {
+    return stations;
+}
+
+const string &Data::getNetwork() const {
+    return network;
 }
 
 //só flow diferente

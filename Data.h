@@ -1,9 +1,6 @@
-//
-// Created by Guilherme Monteiro on 03/03/2023.
-//
-
 #ifndef DA_PROJECT1_DATA_H
 #define DA_PROJECT1_DATA_H
+
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -24,6 +21,9 @@ struct Result {
 using namespace std;
 class Data {
 private:
+    string stations;
+    string network;
+
     Graph g;
     map<string, int> names;
 
@@ -33,15 +33,17 @@ private:
     queue<int> trainSources;
 
 public:
+    const string &getStations() const;
+    const string &getNetwork() const;
+
     Graph getG() const;
     map<string, int> getNames() const;
 
     void setG(Graph g);
     // ~Data();
 
-public:
      bool readStations(string filename);
-     bool readNetworks(string filename);
+     bool readNetwork(string filename);
      void findTrainSources();
 
      //T2.1
