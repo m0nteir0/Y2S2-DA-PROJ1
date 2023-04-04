@@ -146,8 +146,8 @@ double Data::getMaxFlow(queue<int> source, int target) {
 }
 
 /**
- * Retorna verdadeiro ou falso, consoante a possivel existencia de um percurso até ao vertex de id 'target' (estação de destino). Caso exista, define esse caminho através do parâmetro 'path' dos vértices do grafo.
- * @param s queue de valores inteiros que correspondem aos ids
+ * Retorna verdadeiro ou falso, consoante a existencia de um percurso até ao vertex de id 'target' (estação de destino) a partir das estações de partida. Caso exista, define esse caminho através do parâmetro 'path' dos vértices do grafo.
+ * @param s queue de valores inteiros que correspondem aos ids das estações de partida
  * @param target id do vértice de destino (relacionado com uma dada estação)
  * @return valor booleano correspondente à existencia de um percurso até ao vertex de id 'target' (estação de destino)
  */
@@ -392,6 +392,12 @@ pair<double, double> Data::maxTrainsCost(int source, int target){
     return {bottleneck, cost};
 }
 
+/**
+ * ?? CONFIRMAR 1a frase
+ * Percorre um dado percurso entre a estação de partida e a de chegada ('source' e 'target'), utilizando uma Breath-first-search, para atribuir as distâncias e os preços das viagens, tendo em conta se o serviço é 'Standard' ou 'Alfa'.
+ * @param source id do vértice de partida (relacionado com uma dada estação)
+ * @param target id do vértice de destino (relacionado com uma dada estação)
+ */
 void Data::cheapestPath(int source, int target) {
     for (Vertex* v : g.getVertexSet()){
         v->setVisited(false);
@@ -425,7 +431,13 @@ void Data::cheapestPath(int source, int target) {
 
 //----------------------------------
 /* T4.1 */
-
+//CONFIRMAR escrita
+/**
+ * Calcula o número máximo de comboios que podem viajar simultaneamente entre duas estações específicas numa rede de conectividade reduzida, ou seja, num subgrafo da rede ferroviária original.
+ * @param source id do vértice de partida (relacionado com uma dada estação)
+ * @param target id do vértice de destino (relacionado com uma dada estação)
+ * @return valor double correspondende ao numero maximo de comboios que podem viajar simultaneamente entre as duas estações fornecidas na rede de comectividade reduzida
+ */
 double Data::getMaxFlowSub(queue<int> source, int target) {
     for (Vertex* v : g.getVertexSet()){
         for (Edge* e : v->getAdj()){
@@ -454,6 +466,12 @@ double Data::getMaxFlowSub(queue<int> source, int target) {
     return maxFlow;
 }
 
+/**
+ * Retorna verdadeiro ou falso, consoante a existencia de um percurso até ao vertex de id 'target' (estação de destino) a partir das estações de partida, rede de conectividade reduzida, ou seja, num subgrafo da rede ferroviária original. Caso exista, define esse caminho através do parâmetro 'path' dos vértices do grafo.
+ * @param s queue de valores inteiros que correspondem aos ids das estações de partida
+ * @param target id do vértice de destino (relacionado com uma dada estação)
+ * @return valor booleano correspondente à existencia de um percurso até ao vertex de id 'target' (estação de destino) na rede de comectividade reduzida
+ */
 bool Data::pathSub(queue<int> s, int target) {
     for (Vertex* v : g.getVertexSet()){
         v->setVisited(false);
@@ -496,10 +514,21 @@ bool Data::pathSub(queue<int> s, int target) {
 //100->90 -10%
 //3->0 -100%
 //T4.2
+/**
+ * Compara dois valores de
+ * @param r1
+ * @param r2
+ * @return
+ */
 bool comp(Result r1, Result r2){
     return r1.dif > r2.dif || (r1.dif == r2.dif && r1.sumFlow > r2.sumFlow );
 }
 
+/**
+ *
+ * @param k
+ * @return
+ */
 vector<Result> Data::topAffected(int k){
     vector<Result> res;
     Station * s;
