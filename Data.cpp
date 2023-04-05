@@ -515,19 +515,19 @@ bool Data::pathSub(queue<int> s, int target) {
 //3->0 -100%
 //T4.2
 /**
- * Compara dois valores de
- * @param r1
- * @param r2
- * @return
+ * Compara dois objetos do tipo Result, em relação ao seu parâmetro 'dif'. Caso esse parâmetro seja igual, verifica o parâmetro 'sumFlow'. É utilizada como comparador numa função 'sort'.
+ * @param r1 objeto do tipo result a comparar
+ * @param r2 objeto do tipo result a comparar
+ * @return valor booleano consoante a comparação dos dois objetos Result
  */
 bool comp(Result r1, Result r2){
     return r1.dif > r2.dif || (r1.dif == r2.dif && r1.sumFlow > r2.sumFlow );
 }
 
 /**
- *
- * @param k
- * @return
+ * Determina as top K estações mais afetadas por falhas nos segmentos da rede ferroviária.
+ * @param k valor inteiro que determina o número de estações listadas
+ * @return vetor de objetos Result correspondentes às top estações mais afetadas
  */
 vector<Result> Data::topAffected(int k){
     vector<Result> res;
@@ -558,4 +558,4 @@ const string &Data::getNetwork() const {
     return network;
 }
 
-//só flow diferente
+

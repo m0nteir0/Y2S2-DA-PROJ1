@@ -11,6 +11,7 @@
 #include "Station.h"
 #include "Graph.h"
 
+//doc
 struct Result {
     Station * s;
     double dif;
