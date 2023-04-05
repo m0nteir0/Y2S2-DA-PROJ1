@@ -113,6 +113,7 @@ map<string, int> Data::getNames() const {
 
 /**
  * Retorna o flow máximo (ou seja, número máximo de comboios) que podem atravessar o percurso de 'source' até 'target' (argumentos fornecidos).
+ * COMPLEXIDADE: O(V*E^2), onde V corresponde ao número de vértices do grafo e E ao número de edges
  * @param source id do vértice de partida (relacionado com uma dada estação)
  * @param target id do vértice de destino (relacionado com uma dada estação)
  * @return valor double correspondente ao numero maximo de comboios que podem atravessar o dado percurso
@@ -147,6 +148,7 @@ double Data::getMaxFlow(queue<int> source, int target) {
 
 /**
  * Retorna verdadeiro ou falso, consoante a existencia de um percurso até ao vertex de id 'target' (estação de destino) a partir das estações de partida. Caso exista, define esse caminho através do parâmetro 'path' dos vértices do grafo.
+ * COMPLEXIDADE: O(V^2 + V*E), onde V corresponde ao número de vértices do grafo e E ao número de edges
  * @param s queue de valores inteiros que correspondem aos ids das estações de partida
  * @param target id do vértice de destino (relacionado com uma dada estação)
  * @return valor booleano correspondente à existencia de um percurso até ao vertex de id 'target' (estação de destino)
@@ -193,6 +195,7 @@ bool Data::path(queue<int> s, int target) {
 
 /**
  * Retorna o 'bottleneck' do percurso, ou seja, o flow máximo (numero máximo de comboios) que podem atravessar o percurso, tendo em conta a capacidade minima de todas as capacidades dos edges do percurso.
+ * COMPLEXIDADE: O(V), onde V corresponde ao número de vértices do grafo
  * @param target id do vértice de destino (relacionado com uma dada estação)
  * @return valor double correspondente ao bottleneck, número maximo de comboios que podem atravessar o dado percurso
  */
@@ -210,6 +213,7 @@ double Data::findBottleneck(int target) {
 
 /**
  * Altera o flow das edges, ou seja, o numero de comboios que podem atravessar nas linhas, tendo em consideração a bottleneck.
+ * COMPLEXIDADE: O(V), onde V corresponde ao número de vértices do grafo
  * @param target id do vértice de destino (relacionado com uma dada estação)
  * @param bottleneck
  */
@@ -229,6 +233,7 @@ void Data::augmentPath(int target, double bottleneck) {
 /* T2.2 */
 /**
  * Determina, de todos os pares de estações, qual(ais) requer(em) maior numero de comboios, tendo em conta a capacidade de toda a rede.
+ * COMPLEXIDADE: O((V^2) * (V*E^2)), onde V corresponde ao número de vértices do grafo e E ao número de edges
  * @return par de vetores de pares de estações que requerem o valor maximo de toda a rede
  */
 pair<vector<pair<Station*,Station*>>,double> Data::stationPairs(){
@@ -259,6 +264,7 @@ pair<vector<pair<Station*,Station*>>,double> Data::stationPairs(){
 /* T2.3 */
 /**
  * Indica onde se deve atribuir maiores orçamentos para a compra e manutenção de comboios e lista os municípios mais relevantes, em relação às suas necessidades de transporte.
+ * COMPLEXIDADE: O(M * (V^2) * (V*E^2)), onde V corresponde ao número de vértices do grafo, E ao número de edges e M ao número de municípios
  * @return vetor de pares de string (nomes dos municípios) e double (media de comboios que passa em cada estação do município) com maior necessidade
  */
 vector<pair<string, double>> Data::topMunicipalities() {
@@ -287,6 +293,7 @@ vector<pair<string, double>> Data::topMunicipalities() {
 
 /**
  * Indica onde se deve atribuir maiores orçamentos para a compra e manutenção de comboios e lista os distritos mais relevantes, em relação às suas necessidades de transporte.
+ * COMPLEXIDADE: O(S * (V^2) * (V*E^2)), onde V corresponde ao número de vértices do grafo, E ao número de edges e D ao número de distritos
  * @return vetor de pares de string (nomes dos distritos) e double (media de comboios que passa em cada estação do distrito) com maior necessidade
  */
 vector<pair<string, double>> Data::topDistricts() {
