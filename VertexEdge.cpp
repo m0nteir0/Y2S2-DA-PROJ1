@@ -1,10 +1,6 @@
-//
-// Created by Guilherme Monteiro on 03/03/2023.
-//
-
 #include "VertexEdge.h"
 
-/************************* Vertex  **************************/
+/************************* Vertex **************************/
 
 Vertex::Vertex(int id): id(id) {}
 
@@ -57,11 +53,6 @@ bool Vertex::removeEdge(int destID) {
     }
     return removedEdge;
 }
-/*
-bool Vertex::operator<(Vertex & vertex) const {
-    return this->dist < vertex.dist;
-}
- */
 
 int Vertex::getId() const {
     return this->id;
@@ -73,14 +64,6 @@ std::vector<Edge*> Vertex::getAdj() const {
 
 bool Vertex::isVisited() const {
     return this->visited;
-}
-
-bool Vertex::isProcessing() const {
-    return this->processing;
-}
-
-unsigned int Vertex::getIndegree() const {
-    return this->indegree;
 }
 
 double Vertex::getDist() const {
@@ -95,14 +78,6 @@ std::vector<Edge *> Vertex::getIncoming() const {
     return this->incoming;
 }
 
-int Vertex::getNum() const {
-    return this->num;
-}
-
-int Vertex::getLow() const {
-    return this->low;
-}
-
 void Vertex::setId(int id) {
     this->id = id;
 }
@@ -111,21 +86,6 @@ void Vertex::setVisited(bool visited) {
     this->visited = visited;
 }
 
-void Vertex::setProcesssing(bool processing) {
-    this->processing = processing;
-}
-
-void Vertex::setIndegree(unsigned int indegree) {
-    this->indegree = indegree;
-}
-
-void Vertex::setNum(int num) {
-    this->num = num;
-}
-
-void Vertex::setLow(int low) {
-    this->low = low;
-}
 void Vertex::setDist(double dist) {
     this->dist = dist;
 }
@@ -147,7 +107,6 @@ void Vertex::setStation(Station *station) {
 Edge::Edge(Vertex *orig, Vertex *dest, double w): orig(orig), dest(dest), weight(w) {}
 Edge::Edge(Vertex *orig, Vertex *dest, double w, string service): orig(orig), dest(dest), weight(w), service(service) {}
 
-
 Vertex * Edge::getDest() const {
     return this->dest;
 }
@@ -164,16 +123,8 @@ Edge *Edge::getReverse() const {
     return this->reverse;
 }
 
-bool Edge::isSelected() const {
-    return this->selected;
-}
-
 double Edge::getFlow() const {
     return flow;
-}
-
-void Edge::setSelected(bool selected) {
-    this->selected = selected;
 }
 
 void Edge::setReverse(Edge *reverse) {

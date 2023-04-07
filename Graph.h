@@ -1,19 +1,15 @@
 #ifndef DA_PROJECT1_GRAPH_H
 #define DA_PROJECT1_GRAPH_H
 
-
 #include <iostream>
 #include <vector>
 #include <queue>
 #include <limits>
 #include <algorithm>
-// #include "../data_structures/MutablePriorityQueue.h"
-
 #include "VertexEdge.h"
 
 class Graph {
 public:
-    ~Graph();
     /*
     * Auxiliary function to find a vertex with a given ID.
     */
@@ -44,19 +40,6 @@ public:
 protected:
     std::vector<Vertex *> vertexSet;    // vertex set
 
-    //double ** distMatrix = nullptr;   // dist matrix for Floyd-Warshall
-    //int **pathMatrix = nullptr;   // path matrix for Floyd-Warshall
-
-    /*
-     * Finds the index of the vertex with a given content.
-     */
-    int findVertexIdx(const int &id) const;
-
 };
-
-//void deleteMatrix(int **m, int n);
-//void deleteMatrix(double **m, int n);
-
-
 
 #endif //DA_PROJECT1_GRAPH_H

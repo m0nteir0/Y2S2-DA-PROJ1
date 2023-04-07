@@ -1,7 +1,3 @@
-//
-// Created by Guilherme Monteiro on 03/03/2023.
-//
-
 #include "Graph.h"
 
 int Graph::getNumVertex() const {
@@ -22,15 +18,6 @@ Vertex * Graph::findVertex(const int &id) const {
     return nullptr;
 }
 
-/*
- * Finds the index of the vertex with a given content.
- */
-int Graph::findVertexIdx(const int &id) const {
-    for (unsigned i = 0; i < vertexSet.size(); i++)
-        if (vertexSet[i]->getId() == id)
-            return i;
-    return -1;
-}
 /*
  *  Adds a vertex with a given content or info (in) to a graph (this).
  *  Returns true if successful, and false if a vertex with that content already exists.
@@ -68,6 +55,7 @@ bool Graph::addEdge(Vertex* v1,Vertex* v2, double w, string service) {
     v1->addEdge(v2, w, service);
     return true;
 }
+
 bool Graph::addBidirectionalEdge(const int &sourc, const int &dest, double w) {
     auto v1 = findVertex(sourc);
     auto v2 = findVertex(dest);
@@ -146,9 +134,4 @@ void Graph::resetLines(){
             e->setAvailable(true);
         }
     }
-}
-
-Graph::~Graph() {
-    deleteMatrix(distMatrix, vertexSet.size());
-    deleteMatrix(pathMatrix, vertexSet.size());
 }
