@@ -399,7 +399,7 @@ bool Interface::costs() {
 bool Interface::subgraph() {
     while (true){
         cout << endl << "==========SUBGRAPH==========" << endl;
-        cout << endl << "Options:\n\t1-Disbale segments of the network\n\t2-Analyze the reduced connectivity network\n\tb-Back\n\te-Exit"<< endl;
+        cout << endl << "Options:\n\t1-Disbale segments of the network\n\t2-Analyze the reduced connectivity network\n\t3-Reset network back to its original state\n\tb-Back\n\te-Exit"<< endl;
         string input;
         cout << "choose option: ";
         getline( cin, input);
@@ -416,6 +416,10 @@ bool Interface::subgraph() {
                 case '2':
                     if (subgraphAnalyze())
                         return true;
+                    break;
+                case '3':
+                    d_.getG().resetLines();
+                    cout << "Successfully reset the network back to it's original state\n";
                     break;
                 case 'b':
                     return false;
@@ -435,7 +439,7 @@ bool Interface::disableSegments() {
         cout << endl << "=========DISABLE SEGMENTS=========" << endl;
         cout << "Do you want to type the affected LINE(S) or the affected STATION(S) to be cut off the railway network?"
              << endl;
-        cout << endl << "Options:\n\t1-Lines\n\t2-Stations\n\t3-Reset\n\tb-Back\n\te-Exit" << endl;
+        cout << endl << "Options:\n\t1-Lines\n\t2-Stations\n\tb-Back\n\te-Exit" << endl;
 
         string input0;
         cout << "choose option: ";
@@ -446,6 +450,7 @@ bool Interface::disableSegments() {
             cout << endl << "Please, only type one of the characters in the options described above." << endl;
             return subgraph();
         } else {
+            map<string, int> names = d_.getNames();
             switch (input0[0]) {
                 case 'b':
                     return false;
@@ -453,7 +458,6 @@ bool Interface::disableSegments() {
                     cout << endl << "Exiting program..." << endl;
                     return true;
                 case '1': {
-                    cout << endl << "Type the affected lines(s) and hit 'd' when done.\n\n" << endl;
                     string s1;
                     vector<int> ids;
                     vector<pair<int, int>> lines;
@@ -461,7 +465,7 @@ bool Interface::disableSegments() {
 
                     while (flag) {
                         cout << endl
-                             << "Affected lines have 2 connecting stations. Type one of them and we will print the connecting stations.\n\n"
+                             << "Affected lines have 2 connecting stations. Type one of them and we will print the connecting stations. Hit 'd' if done.\n"
                              << endl;
                         cout << "Station:";
                         getline(cin, s1);
@@ -470,23 +474,36 @@ bool Interface::disableSegments() {
                         if (s1 == "d") {
                             flag = false;
                         } else {
-                            if (d_.getNames().find(s1) != d_.getNames().end()) {
-                                int id1 = d_.getNames()[s1];
+                            if (names.find(s1) != names.end()) {
+                                int id1 = names[s1];
+                                bool hasConnections = false;
                                 for (auto connection: d_.getG().findVertex(id1)->getAdj()) {
                                     cout << connection->getDest()->getId() << " - "
                                          << connection->getDest()->getStation()->getName() << "\n";
                                     ids.push_back(connection->getDest()->getId());
+                                    hasConnections = true;
                                 }
+                                if (!hasConnections){
+                                    cout << "This station doesn't have any connections\n";
+                                    continue;
+                                }
+
                                 cout << "Choose the ID of the connecting station. \n";
                                 string s2;
                                 getline(cin, s2);
-                                int id2 = stoi(s2);
-                                if (find(ids.begin(), ids.end(), id2) != ids.end()) {
-                                    ids.clear();
-                                    lines.push_back({id1, id2});
-                                } else {
-                                    cout << "You didn't chose a connecting station. Please choose one of the IDs above."
-                                         << endl;
+                                int id2;
+                                try {
+                                    id2 = stoi(s2);
+                                    if (find(ids.begin(), ids.end(), id2) != ids.end()) {
+                                        ids.clear();
+                                        lines.push_back({id1, id2});
+                                    } else {
+                                        cout << "You didn't chose a connecting station. Please choose one of the IDs above."
+                                             << endl;
+                                    }
+                                } catch (std::invalid_argument &i) {
+                                    cout << "You must input a number" << endl;
+                                    continue;
                                 }
                             } else cout << "Not a valid station." << endl;
                         }
@@ -508,8 +525,8 @@ bool Interface::disableSegments() {
                         if (inp == "d") {
                             flag = false;
                         } else {
-                            if (d_.getNames().find(inp) != d_.getNames().end())
-                                v.push_back(d_.getNames()[inp]);
+                            if (names.find(inp) != names.end())
+                                v.push_back(names[inp]);
                             else cout << "Not a valid station." << endl;
                         }
                     }
@@ -518,9 +535,6 @@ bool Interface::disableSegments() {
                     cout << "Stations removed." << endl;
                     return false;
                 }
-                case '3':
-                    d_.getG().resetLines();
-                    return false;
                 default:
                     cout << endl << "Not a valid option" << endl;
             }
