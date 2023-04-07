@@ -89,7 +89,6 @@ bool Data::readNetwork(std::string filename) {
 
                 if(!g.addBidirectionalEdge(vA, vB, stod(capacity), service)){
                     cout << "\nOn line " << (counter) <<", there are stations that do not exist.\n";
-                    //return false;
                 }
             }
             network = filename;
