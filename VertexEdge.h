@@ -12,18 +12,15 @@
 #include <algorithm>
 
 #include "Station.h"
-// #include "../data_structures/MutablePriorityQueue.h"
 
 class Edge;
 
-#define INF std::numeric_limits<double>::max()
 
 /************************* Vertex  **************************/
 
 class Vertex {
 public:
     Vertex(int id);
-    // bool operator<(Vertex & vertex) const; // // required by MutablePriorityQueue
 
     int getId() const;
     std::vector<Edge *> getAdj() const;
@@ -32,8 +29,8 @@ public:
     unsigned int getIndegree() const;
     double getDist() const;
     Edge *getPath() const;
-    int getNum() const;
-    int getLow() const;
+    //int getNum() const;
+    //int getLow() const;
     std::vector<Edge *> getIncoming() const;
 
     Station* getStation() const;
@@ -60,20 +57,16 @@ protected:
     Station* station; // station
 
     // auxiliary fields
-    bool visited = false; // used by DFS, BFS, Prim ...
-
-    //USAMOS
+    bool visited = false;
     double dist = 0;
     std::vector<Edge *> incoming; // incoming edges
     Edge *path = nullptr;
 
     //NAO USAMOS ??
-    bool processing = false; // used by isDAG (in addition to the visited attribute)
-    unsigned int indegree; // used by topsort
-    int num = -1;
-    int low = -1;
-
-
+    //bool processing = false; // used by isDAG (in addition to the visited attribute)
+    //unsigned int indegree; // used by topsort
+    //int num = -1;
+    //int low = -1;
     // int queueIndex = 0; 		// required by MutablePriorityQueue and UFDS
 };
 

@@ -174,19 +174,6 @@ bool Data::path(queue<int> s, int target) {
                     return true;
             }
         }
-
-        /*
-        for (Edge* e : v->getIncoming()){
-            if (e->getReverse()->getOrig() == v && !e->getReverse()->getDest()->isVisited() && e->getReverse()->getFlow() != 0){
-                s.push(e->getReverse()->getDest()->getId());
-                e->getReverse()->getDest()->setVisited(true);
-                e->getReverse()->getDest()->setPath(e->getReverse());
-                if (e->getReverse()->getDest()->getId() == target)
-                    return true;
-            }
-        }
-         */
-
         s.pop();
     }
     return false;

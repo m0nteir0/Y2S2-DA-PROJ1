@@ -1,7 +1,3 @@
-//
-// Created by Guilherme Monteiro on 03/03/2023.
-//
-
 #ifndef DA_PROJECT1_GRAPH_H
 #define DA_PROJECT1_GRAPH_H
 
@@ -43,14 +39,13 @@ public:
     void disableLines(vector<pair<int,int>> lines);
     void resetLines();
 
-
     int getNumVertex() const;
     std::vector<Vertex *> getVertexSet() const;
 protected:
     std::vector<Vertex *> vertexSet;    // vertex set
 
-    double ** distMatrix = nullptr;   // dist matrix for Floyd-Warshall
-    int **pathMatrix = nullptr;   // path matrix for Floyd-Warshall
+    //double ** distMatrix = nullptr;   // dist matrix for Floyd-Warshall
+    //int **pathMatrix = nullptr;   // path matrix for Floyd-Warshall
 
     /*
      * Finds the index of the vertex with a given content.
@@ -59,8 +54,8 @@ protected:
 
 };
 
-void deleteMatrix(int **m, int n);
-void deleteMatrix(double **m, int n);
+//void deleteMatrix(int **m, int n);
+//void deleteMatrix(double **m, int n);
 
 
 

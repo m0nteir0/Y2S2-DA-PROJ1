@@ -111,7 +111,7 @@ void deleteMatrix(double **m, int n) {
 /**
  * //verificar
  * Desativa as estações fornecidas( e consequentemente os segmentos que têm ligação a essas estações), através do parâmetro 'available' das Edges.
- * COMPLEXIDADE: O(S*E)
+ * COMPLEXIDADE: O(V*E)
  * @param stations vetor de números inteiros que coorespondem aos ids das estações a desativar
 */
 void Graph::disableStations(vector<int> stations){
@@ -125,7 +125,7 @@ void Graph::disableStations(vector<int> stations){
 /**
  * //verificar
  * Desativa os segmentos fornecidos, através do seu parâmetro 'available'.
- * COMPLEXIDADE: O(L*V)
+ * COMPLEXIDADE: O(V*E)
  * @param lines vetor de pares de inteiros, que correspondem aos ids das estações que formam o segmento de linha a desativar
  */
 void Graph::disableLines(vector<pair<int,int>> lines){
