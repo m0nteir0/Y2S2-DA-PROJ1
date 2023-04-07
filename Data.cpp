@@ -325,7 +325,7 @@ double Data::nrTrainsArriving(int target){
 
 /**
  * Determina as estações da rede ferroviária que são fontes de comboios, neste caso, são os 'extremos' das linhas e as estações onde há cruzamento de linhas. Acrescenta-as à queue 'trainSources' da objeto do tipo Data.
- * COMPLEXIDADE: O(V*E), , onde V corresponde ao número de vértices do grafo e E ao número de edges
+ * COMPLEXIDADE: O(V+E), , onde V corresponde ao número de vértices do grafo e E ao número de edges
  * Determina as estações da rede ferroviária que são fontes de comboios, neste caso, são os 'extremos' das linhas. Acrescenta-as ao vetor 'trainSources' da objeto do tipo Data.
  */
 void Data::findTrainSources(){

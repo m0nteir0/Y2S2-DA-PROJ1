@@ -79,27 +79,9 @@ bool Graph::addBidirectionalEdge(Vertex* v1, Vertex* v2, double w, string servic
     return true;
 }
 
-void deleteMatrix(int **m, int n) {
-    if (m != nullptr) {
-        for (int i = 0; i < n; i++)
-            if (m[i] != nullptr)
-                delete [] m[i];
-        delete [] m;
-    }
-}
-
-void deleteMatrix(double **m, int n) {
-    if (m != nullptr) {
-        for (int i = 0; i < n; i++)
-            if (m[i] != nullptr)
-                delete [] m[i];
-        delete [] m;
-    }
-}
 /**
- * //verificar
- * Desativa as estações fornecidas( e consequentemente os segmentos que têm ligação a essas estações), através do parâmetro 'available' das Edges.
- * COMPLEXIDADE: O(V*E)
+ * Desativa as estações fornecidas (e consequentemente os segmentos que têm ligação a essas estações), através do parâmetro 'available' das Edges.
+ * COMPLEXIDADE: O(V+E), onde V corresponde ao número de vértices do grafo e E ao número de edges
  * @param stations vetor de números inteiros que coorespondem aos ids das estações a desativar
 */
 void Graph::disableStations(vector<int> stations){
@@ -111,9 +93,8 @@ void Graph::disableStations(vector<int> stations){
 }
 
 /**
- * //verificar
  * Desativa os segmentos fornecidos, através do seu parâmetro 'available'.
- * COMPLEXIDADE: O(V*E)
+ * COMPLEXIDADE: O(V+E), onde V corresponde ao número de vértices do grafo e E ao número de edges
  * @param lines vetor de pares de inteiros, que correspondem aos ids das estações que formam o segmento de linha a desativar
  */
 void Graph::disableLines(vector<pair<int,int>> lines){
