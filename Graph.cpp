@@ -108,7 +108,12 @@ void deleteMatrix(double **m, int n) {
         delete [] m;
     }
 }
-
+/**
+ * //verificar
+ * Desativa as estações fornecidas( e consequentemente os segmentos que têm ligação a essas estações), através do parâmetro 'available' das Edges.
+ * COMPLEXIDADE: O(S*E)
+ * @param stations vetor de números inteiros que coorespondem aos ids das estações a desativar
+*/
 void Graph::disableStations(vector<int> stations){
     for (int i : stations){
         Vertex* v = findVertex(i);
@@ -117,6 +122,12 @@ void Graph::disableStations(vector<int> stations){
     }
 }
 
+/**
+ * //verificar
+ * Desativa os segmentos fornecidos, através do seu parâmetro 'available'.
+ * COMPLEXIDADE: O(L*V)
+ * @param lines vetor de pares de inteiros, que correspondem aos ids das estações que formam o segmento de linha a desativar
+ */
 void Graph::disableLines(vector<pair<int,int>> lines){
     for (pair<int,int> p : lines){
 
@@ -125,7 +136,10 @@ void Graph::disableLines(vector<pair<int,int>> lines){
         for (auto e : v->getIncoming()) if (e->getOrig()->getId() == p.second) {e->setAvailable(false); break;}
     }
 }
-
+/**
+ * Dá reset à todas as linhas do grafo, reativando-as.
+ * COMPLEXIDADE: O(V*E)
+ */
 void Graph::resetLines(){
     for(auto v : vertexSet){
         for(auto e : v->getAdj()){
