@@ -360,7 +360,7 @@ void Data::findTrainSources(){
 
 /**
  * Calcula o número máximo de comboios que podem viajar simultaneamente entre duas estações específicas com o custo mínimo.
- * COMPLEXIDADE:
+ * COMPLEXIDADE: O(V*E), onde V corresponde ao número de vértices do grafo e E ao número de edges
  * @param source id do vértice de partida (relacionado com uma dada estação)
  * @param target id do vértice de destino (relacionado com uma dada estação)
  * @return par de valores double correspondentes ao 'bottleneck' (numero maximo de comboios que pode atravessar o percurso) e custo ,respetivamente
@@ -383,7 +383,7 @@ pair<double, double> Data::maxTrainsCost(int source, int target){
 
 /**
  * Percorre um dado percurso entre a estação de partida e a de chegada ('source' e 'target'), tendo como base o algoritmo de Djikstra, para atribuir as distâncias e os preços das viagens, tendo em conta se o serviço é 'Standard' ou 'Alfa'.
- * COMPLEXIDADE: O(V*E) , onde V corresponde ao número de vértices do grafo e E ao número de edges
+ * COMPLEXIDADE: O(V*E), onde V corresponde ao número de vértices do grafo e E ao número de edges
  * @param source id do vértice de partida (relacionado com uma dada estação)
  * @param target id do vértice de destino (relacionado com uma dada estação)
  */
