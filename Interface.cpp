@@ -59,7 +59,7 @@ void Interface::welcomePage() {
     while (true){
         cout << endl << "=========WELCOME PAGE=========" << endl;
         cout << endl << "Options:\n\t1-Read files\n\t2-Credits\n\te-Exit"<<endl;
-        cout << "choose option: ";
+        cout << "Choose option: ";
         getline(cin, input);
         if(input.size()>1){
             cout << endl << "Please, only type one of the characters in the options described above." << endl;
@@ -102,7 +102,7 @@ bool Interface::readFiles() {
     string input, stations, network;
 
     while (true){
-        cout << "choose option: ";
+        cout << "Choose option: ";
         getline( cin, input);
         if(input.size()>1){
             cout << endl << "Please, only type one of the characters in the options described above." << endl;
@@ -153,7 +153,7 @@ void Interface::mainMenu() {
         cout << "I want to get informations regarding:" << endl;
         cout << endl << "Options:\n\t1-Full railway capacity\n\t2-Costs (depending on service type)\n\t3-Considering maintenance and line failures\n\te-Exit"<<endl;
         string input;
-        cout << "choose option: ";
+        cout << "Choose option: ";
         getline( cin, input);
         if(input.size()>1){
             cout << endl << "Please, only type one of the characters in the options described above." << endl;
@@ -191,11 +191,11 @@ bool Interface::full() {
         cout << endl << "I want to get informations regarding:" << endl;
         cout << endl << "Options:\n\t"
                         "1-Maximum number of trains that can simultaneously travel between two specific stations\n\t"
-                        "2-Which pair(s) of stations require the most amount of trains [when taking full advantage of the existing network capacity]\n\t"
+                        "2-Pair(s) of stations which require the most amount of trains \n\t"
                         "3-Top-k municipalities and/or districts, regarding their transportation needs\n\t"
                         "4-Maximum number of trains that can simultaneously arrive at a given station"
                         "\n\tb-Back\n\te-Exit"<<endl;
-        cout << "choose option: ";
+        cout << "Choose option: ";
         getline( cin, input);
         if(input.size()>1){
             cout << endl << "Please, only type one of the characters in the options described above." << endl;
@@ -212,7 +212,7 @@ bool Interface::full() {
                     map<string, int> names = d_.getNames();
 
                     while (true){
-                        cout << "Type origin station:" << endl;
+                        cout << "Type origin station: " << endl;
                         getline(cin, os);
 
                         auto s = names.find(os);
@@ -224,7 +224,7 @@ bool Interface::full() {
                     }
 
                     while (true) {
-                        cout << "Type destination station:" << endl;
+                        cout << "Type destination station: " << endl;
                         getline(cin, ds);
 
                         auto t = names.find(ds);
@@ -259,7 +259,7 @@ bool Interface::full() {
                     break;
                 }
                 case ('3'):
-                    cout << "Choose an option" << endl << "1-Municipalities" << endl << "2-Districts" << endl;
+                    cout << "1-Municipalities" << endl << " 2-Districts" << endl << "Choose option:";
                     getline(cin, option);
                     cout << "Choose the number of places for the 'top' station list: " << endl;
                     getline(cin, k);
@@ -306,7 +306,7 @@ bool Interface::full() {
                     map<string, int> names = d_.getNames();
 
                     while (true){
-                        cout << "Type name of the station:" << endl;
+                        cout << "Type name of the station: " << endl;
                         getline(cin, os);
 
                         auto s = names.find(os);
@@ -339,7 +339,7 @@ bool Interface::costs() {
         cout << endl << "=========COSTS REGARDING SERVICE TYPE (standard or alpha pendular) MENU=========" << endl;
         cout << endl << "Options:\n\t1-Maximum amount of trains that can simultaneously travel between two specific stations with minimum cost for the company\n\tb-Back\n\te-Exit"<< endl;
         string input;
-        cout << "choose option: ";
+        cout << "Choose option: ";
         getline( cin, input);
 
         if(input.size()>1){
@@ -354,7 +354,7 @@ bool Interface::costs() {
                     map<string, int> names = d_.getNames();
 
                     while (true){
-                        cout << "Type origin station:" << endl;
+                        cout << "Type origin station: " << endl;
                         getline(cin, os);
 
                         auto s = names.find(os);
@@ -366,7 +366,7 @@ bool Interface::costs() {
                     }
 
                     while (true) {
-                        cout << "Type destination station:" << endl;
+                        cout << "Type destination station: " << endl;
                         getline(cin, ds);
 
                         auto t = names.find(ds);
@@ -399,9 +399,9 @@ bool Interface::costs() {
 bool Interface::subgraph() {
     while (true){
         cout << endl << "==========SUBGRAPH==========" << endl;
-        cout << endl << "Options:\n\t1-Disbale segments of the network\n\t2-Analyze the reduced connectivity network\n\t3-Reset network back to its original state\n\tb-Back\n\te-Exit"<< endl;
+        cout << endl << "Options:\n\t1-Disable segments of the network\n\t2-Analyze the reduced connectivity network\n\t3-Reset network back to its original state\n\tb-Back\n\te-Exit"<< endl;
         string input;
-        cout << "choose option: ";
+        cout << "Choose option: ";
         getline( cin, input);
 
         if(input.size()>1){
@@ -442,7 +442,7 @@ bool Interface::disableSegments() {
         cout << endl << "Options:\n\t1-Lines\n\t2-Stations\n\tb-Back\n\te-Exit" << endl;
 
         string input0;
-        cout << "choose option: ";
+        cout << "Choose option: ";
         getline(cin, input0);
         cout << endl << "Input: " << input0 << endl;
 
@@ -467,7 +467,7 @@ bool Interface::disableSegments() {
                         cout << endl
                              << "Affected lines have 2 connecting stations. Type one of them and we will print the connecting stations. Hit 'd' if done.\n"
                              << endl;
-                        cout << "Station:";
+                        cout << "Station: ";
                         getline(cin, s1);
                         cout << endl;
 
@@ -548,7 +548,7 @@ bool Interface::subgraphAnalyze() {
              << "Options:\n\t1-Maximum number of trains that can simultaneously travel between two specific stations in a network of reduced connectivity\n\t2-Top-k most affected stations for each segment to be considered\n\tb-Back\n\te-Exit"
              << endl;
         string input;
-        cout << "choose option: ";
+        cout << "Choose option: ";
         getline(cin, input);
 
         if (input.size() > 1) {
@@ -566,7 +566,7 @@ bool Interface::subgraphAnalyze() {
                     map<string, int> names = d_.getNames();
 
                     while (true){
-                        cout << "Type origin station:" << endl;
+                        cout << "Type origin station: " << endl;
                         getline(cin, os);
 
                         auto s = names.find(os);
@@ -578,7 +578,7 @@ bool Interface::subgraphAnalyze() {
                     }
 
                     while (true) {
-                        cout << "Type destination station:" << endl;
+                        cout << "Type destination station: " << endl;
                         getline(cin, ds);
 
                         auto t = names.find(ds);
@@ -617,7 +617,7 @@ bool Interface::subgraphAnalyze() {
                         Result r = res[i];
                         cout << (i + 1) << "- "
                              << r.s->getName() << ", " << r.s->getLine() << ": "
-                             << r.dif << "%\t"
+                             << r.dif << " %\t | "
                              << r.sumFlow << "->" << r.sumFlowSub
                              << endl;
                     }
@@ -636,11 +636,6 @@ bool Interface::subgraphAnalyze() {
 }
 
 
-/**
- * Função mostra os autores do programa.
- *
- * COMPLEXIDADE: O(n).
- */
 bool Interface::credits() const {
     cout << endl << "=========CREDITS=========" << endl;
     cout << endl;
@@ -651,7 +646,7 @@ bool Interface::credits() const {
     cout << endl << endl << "Options:\n\tb-Back\n\te-Exit"<< endl;
     string input;
     while (true) {
-        cout << "choose option: ";
+        cout << "Choose option: ";
         getline( cin, input);
         if(input.size()>1){
             cout << endl << "Please, only type one of the characters in the options described above." << endl;
