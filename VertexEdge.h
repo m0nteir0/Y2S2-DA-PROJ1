@@ -57,19 +57,22 @@ public:
 protected:
     int id;                // identifier
     std::vector<Edge *> adj;  // outgoing edges
-
     Station* station; // station
 
     // auxiliary fields
     bool visited = false; // used by DFS, BFS, Prim ...
+
+    //USAMOS
+    double dist = 0;
+    std::vector<Edge *> incoming; // incoming edges
+    Edge *path = nullptr;
+
+    //NAO USAMOS ??
     bool processing = false; // used by isDAG (in addition to the visited attribute)
     unsigned int indegree; // used by topsort
-    double dist = 0;
-    Edge *path = nullptr;
     int num = -1;
     int low = -1;
 
-    std::vector<Edge *> incoming; // incoming edges
 
     // int queueIndex = 0; 		// required by MutablePriorityQueue and UFDS
 };

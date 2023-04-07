@@ -325,7 +325,11 @@ vector<pair<string, double>> Data::topDistricts() {
 /* T2.4 */
 /**
  * Indica o número máximo de comboios que podem chegar simultaneamente a uma dada estação, tendo em consideração toda a rede ferroviária.
+<<<<<<< Updated upstream
  * COMPLEXIDADE: O(V*E^2), onde V corresponde ao número de vértices do grafo e E ao número de edges
+=======
+ * COMPLEXIDADE:
+>>>>>>> Stashed changes
  * @param target valor inteiro correspondente ao ID da estação a considerar como destino
  * @return valor double correspondente ao número máximo de comboios que podem chegar simultaneamente à estação fornecida
  */
@@ -348,8 +352,13 @@ double Data::nrTrainsArriving(int target){
 }
 
 /**
+<<<<<<< Updated upstream
  * Determina as estações da rede ferroviária que são fontes de comboios, neste caso, são os 'extremos' das linhas e as estações onde há cruzamento de linhas. Acrescenta-as à queue 'trainSources' da objeto do tipo Data.
  * COMPLEXIDADE: O(V*E), , onde V corresponde ao número de vértices do grafo e E ao número de edges
+=======
+ * Determina as estações da rede ferroviária que são fontes de comboios, neste caso, são os 'extremos' das linhas. Acrescenta-as ao vetor 'trainSources' da objeto do tipo Data.
+ * COMPLEXIDADE:
+>>>>>>> Stashed changes
  */
 void Data::findTrainSources(){
     for (Vertex* v : g.getVertexSet())
@@ -381,6 +390,7 @@ void Data::findTrainSources(){
 
 /**
  * Calcula o número máximo de comboios que podem viajar simultaneamente entre duas estações específicas com o custo mínimo.
+ * COMPLEXIDADE:
  * @param source id do vértice de partida (relacionado com uma dada estação)
  * @param target id do vértice de destino (relacionado com uma dada estação)
  * @return par de valores double correspondentes ao 'bottleneck' (numero maximo de comboios que pode atravessar o percurso) e custo ,respetivamente
@@ -403,8 +413,13 @@ pair<double, double> Data::maxTrainsCost(int source, int target){
 
 /**
  * ?? CONFIRMAR 1a frase
+<<<<<<< Updated upstream
  * Percorre um dado percurso entre a estação de partida e a de chegada ('source' e 'target'), tendo como base o algoritmo de Djikstra, para atribuir as distâncias e os preços das viagens, tendo em conta se o serviço é 'Standard' ou 'Alfa'.
  * COMPLEXIDADE: O(V*E) , onde V corresponde ao número de vértices do grafo e E ao número de edges
+=======
+ * Percorre um dado percurso entre a estação de partida e a de chegada ('source' e 'target'), utilizando uma Breath-first-search, para atribuir as distâncias e os preços das viagens, tendo em conta se o serviço é 'Standard' ou 'Alfa'.
+ * COMPLEXIDADE:
+>>>>>>> Stashed changes
  * @param source id do vértice de partida (relacionado com uma dada estação)
  * @param target id do vértice de destino (relacionado com uma dada estação)
  */
@@ -444,7 +459,11 @@ void Data::cheapestPath(int source, int target) {
 //CONFIRMAR escrita
 /**
  * Calcula o número máximo de comboios que podem viajar simultaneamente entre duas estações específicas numa rede de conectividade reduzida, ou seja, num subgrafo da rede ferroviária original.
+<<<<<<< Updated upstream
  * COMPLEXIDADE: O(V*E^2), onde V corresponde ao número de vértices do grafo e E ao número de edges
+=======
+ * COMPLEXIDADE:
+>>>>>>> Stashed changes
  * @param source id do vértice de partida (relacionado com uma dada estação)
  * @param target id do vértice de destino (relacionado com uma dada estação)
  * @return valor double correspondende ao numero maximo de comboios que podem viajar simultaneamente entre as duas estações fornecidas na rede de comectividade reduzida
@@ -479,7 +498,11 @@ double Data::getMaxFlowSub(queue<int> source, int target) {
 
 /**
  * Retorna verdadeiro ou falso, consoante a existencia de um percurso até ao vertex de id 'target' (estação de destino) a partir das estações de partida, rede de conectividade reduzida, ou seja, num subgrafo da rede ferroviária original. Caso exista, define esse caminho através do parâmetro 'path' dos vértices do grafo.
+<<<<<<< Updated upstream
  * COMPLEXIDADE: O(V^2 + V*E), onde V corresponde ao número de vértices do grafo e E ao número de edges
+=======
+ * COMPLEXIDADE:
+>>>>>>> Stashed changes
  * @param s queue de valores inteiros que correspondem aos ids das estações de partida
  * @param target id do vértice de destino (relacionado com uma dada estação)
  * @return valor booleano correspondente à existencia de um percurso até ao vertex de id 'target' (estação de destino) na rede de comectividade reduzida
@@ -526,7 +549,11 @@ bool Data::pathSub(queue<int> s, int target) {
 //T4.2
 /**
  * Compara dois objetos do tipo Result, em relação ao seu parâmetro 'dif'. Caso esse parâmetro seja igual, verifica o parâmetro 'sumFlow'. É utilizada como comparador numa função 'sort'.
+<<<<<<< Updated upstream
  * COMPLEXIDADE: O(1)
+=======
+ * COMPLEXIDADE:
+>>>>>>> Stashed changes
  * @param r1 objeto do tipo result a comparar
  * @param r2 objeto do tipo result a comparar
  * @return valor booleano consoante a comparação dos dois objetos Result
@@ -537,7 +564,11 @@ bool comp(Result r1, Result r2){
 
 /**
  * Determina as top K estações mais afetadas por falhas nos segmentos da rede ferroviária.
+<<<<<<< Updated upstream
  * COMPLEXIDADE: O((V^2)*(E^2) + V*log(V)), onde V corresponde ao número de vértices do grafo e E ao número de edges
+=======
+ * COMPLEXIDADE:
+>>>>>>> Stashed changes
  * @param k valor inteiro que determina o número de estações listadas
  * @return vetor de objetos Result correspondentes às top estações mais afetadas
  */
