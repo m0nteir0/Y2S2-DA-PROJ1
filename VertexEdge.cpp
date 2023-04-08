@@ -54,6 +54,10 @@ bool Vertex::removeEdge(int destID) {
     return removedEdge;
 }
 
+bool Vertex::operator<(const Vertex &rhs) const {
+    return dist < rhs.dist;
+}
+
 int Vertex::getId() const {
     return this->id;
 }

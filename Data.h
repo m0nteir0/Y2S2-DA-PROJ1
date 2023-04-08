@@ -63,7 +63,7 @@ public:
 
      //T3.1
      pair<double,double> maxTrainsCost(int source, int target);
-     void cheapestPath(int source, int target);
+     void cheapestPath(int source);
 
      //T4.1
     double getMaxFlowSub(queue<int> source, int target);

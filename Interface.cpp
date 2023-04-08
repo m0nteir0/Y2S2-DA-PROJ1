@@ -379,7 +379,11 @@ bool Interface::costs() {
 
                     res = d_.maxTrainsCost(source, target);
 
-                    cout << "\nThe max number of trains is " << res.first << " with the minimum cost of " << res.second << endl;
+                    if (res.first == -1)
+                        cout << "\nIt is not possible to go from source to target" << endl;
+                    else
+                        cout << "\nThe max number of trains is " << res.first << " with the minimum cost of " << res.second << " (per train)" << endl;
+
                     break;
                 }
                 case ('e'):

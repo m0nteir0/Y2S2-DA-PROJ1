@@ -8,6 +8,7 @@
 #include <algorithm>
 
 #include "Station.h"
+#include "MutablePriorityQueue.h"
 
 class Edge;
 
@@ -16,6 +17,8 @@ class Edge;
 
 class Vertex {
 public:
+    friend class MutablePriorityQueue<Vertex>;
+
     Vertex(int id);
 
     int getId() const;
@@ -38,6 +41,7 @@ public:
     Edge * addEdge(Vertex *dest, double w, string service);
     bool removeEdge(int destID);
 
+    bool operator<(const Vertex &rhs) const;
 protected:
     int id;                // identifier
     std::vector<Edge *> adj;  // outgoing edges
@@ -48,6 +52,8 @@ protected:
     double dist = 0;
     std::vector<Edge *> incoming; // incoming edges
     Edge *path = nullptr;
+
+    int queueIndex = 0;
 };
 
 /********************** Edge  ****************************/
