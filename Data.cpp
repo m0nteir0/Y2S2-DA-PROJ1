@@ -1,5 +1,6 @@
 #include <stack>
 #include "Data.h"
+#include "MutablePriorityQueue.h"
 
 bool Data::readStations(string filename) {
     ifstream input(filename);
@@ -360,17 +361,21 @@ void Data::findTrainSources(){
 
 /**
  * Calcula o número máximo de comboios que podem viajar simultaneamente entre duas estações específicas com o custo mínimo.
- * COMPLEXIDADE: O(V*E), onde V corresponde ao número de vértices do grafo e E ao número de edges
+ * COMPLEXIDADE: O((V + E)*log(V)), onde V corresponde ao número de vértices do grafo e E ao número de edges
  * @param source id do vértice de partida (relacionado com uma dada estação)
  * @param target id do vértice de destino (relacionado com uma dada estação)
- * @return par de valores double correspondentes ao 'bottleneck' (numero maximo de comboios que pode atravessar o percurso) e custo ,respetivamente
+ * @return par de valores double correspondentes ao 'bottleneck' (numero maximo de comboios que pode atravessar o percurso) e custo, respetivamente
  */
 pair<double, double> Data::maxTrainsCost(int source, int target){
-    cheapestPath(source, target);
+    cheapestPath(source);
 
     Vertex* v = g.findVertex(target);
-    double bottleneck = std::numeric_limits<double>::max();
     double cost = v->getDist();
+
+    if (cost == std::numeric_limits<double>::max())
+        return {-1, -1};
+
+    double bottleneck = std::numeric_limits<double>::max();
 
     while (v->getPath() != nullptr){
         if (v->getPath()->getWeight() < bottleneck)
@@ -382,38 +387,33 @@ pair<double, double> Data::maxTrainsCost(int source, int target){
 }
 
 /**
- * Percorre um dado percurso entre a estação de partida e a de chegada ('source' e 'target'), tendo como base o algoritmo de Djikstra, para atribuir as distâncias e os preços das viagens, tendo em conta se o serviço é 'Standard' ou 'Alfa'.
- * COMPLEXIDADE: O(V*E), onde V corresponde ao número de vértices do grafo e E ao número de edges
+ * Calcula as distâncias de uma estação de partida ('source') até todas as outras estações, tendo como base o algoritmo de Djikstra, para atribuir as distâncias e os preços das viagens, tendo em conta se o serviço é 'Standard' ou 'Alfa'.
+ * COMPLEXIDADE: O((V + E)*log(V)), onde V corresponde ao número de vértices do grafo e E ao número de edges
  * @param source id do vértice de partida (relacionado com uma dada estação)
- * @param target id do vértice de destino (relacionado com uma dada estação)
  */
-void Data::cheapestPath(int source, int target) {
+void Data::cheapestPath(int source) {
+    MutablePriorityQueue<Vertex> q;
+
     for (Vertex* v : g.getVertexSet()){
-        v->setVisited(false);
         v->setPath(nullptr);
-        v->setDist(std::numeric_limits<double>::max());
+        if (v->getId() == source)
+            v->setDist(0);
+        else v->setDist(std::numeric_limits<double>::max());
+        q.insert(v);
     }
 
-    std::queue<int> s({source});
-    Vertex* source_vertex = g.findVertex(source);
-    source_vertex->setVisited(true);
-    source_vertex->setDist(0);
-    while (!s.empty()){
-        Vertex* v = g.findVertex(s.front());
-        for (Edge* e : v->getAdj()) {
-            double dist = e->getOrig()->getDist() + (e->getService() == "STANDARD" ? 2 : 4);
-            if (!e->getDest()->isVisited()){
-                e->getDest()->setDist(dist);
-                e->getDest()->setVisited(true);
-                e->getDest()->setPath(e);
-                if (e->getDest()->getId() != target)
-                    s.push(e->getDest()->getId());
-            } else if (dist < e->getDest()->getDist()) {
+    while (!q.empty()){
+        Vertex* u = q.extractMin();
+
+        for (Edge* e : u->getAdj()) {
+            double dist = u->getDist() + (e->getService() == "STANDARD" ? 2 : 4);
+
+            if (e->getDest()->getDist() > dist){
                 e->getDest()->setDist(dist);
                 e->getDest()->setPath(e);
+                q.decreaseKey(e->getDest());
             }
         }
-        s.pop();
     }
 }
 
