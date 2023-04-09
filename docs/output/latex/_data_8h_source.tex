@@ -1,0 +1,83 @@
+\hypertarget{_data_8h_source}{}\doxysection{C\+:/\+Users/\+User/\+Desktop/\+DA-\/\+PROJECT1/\+Data.h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef DA\_PROJECT1\_DATA\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define DA\_PROJECT1\_DATA\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <fstream>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <sstream>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <map>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <unordered\_set>}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}Station.h"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}Graph.h"{}}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{comment}{//doc}}
+\DoxyCodeLine{15 \textcolor{keyword}{struct }\mbox{\hyperlink{struct_result}{Result}} \{}
+\DoxyCodeLine{16     \mbox{\hyperlink{class_station}{Station}} * s;}
+\DoxyCodeLine{17     \textcolor{keywordtype}{double} dif;}
+\DoxyCodeLine{18     \textcolor{keywordtype}{double} sumFlow;}
+\DoxyCodeLine{19     \textcolor{keywordtype}{double} sumFlowSub;}
+\DoxyCodeLine{20 \};}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{23 \textcolor{keyword}{class }\mbox{\hyperlink{class_data}{Data}} \{}
+\DoxyCodeLine{24 \textcolor{keyword}{private}:}
+\DoxyCodeLine{25     \textcolor{keywordtype}{string} stations;}
+\DoxyCodeLine{26     \textcolor{keywordtype}{string} network;}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28     \mbox{\hyperlink{class_graph}{Graph}} g;}
+\DoxyCodeLine{29     map<string, int> names;}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31     unordered\_set<string> districts;}
+\DoxyCodeLine{32     unordered\_set<string> municipalities;}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34     queue<int> trainSources;}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{keyword}{public}:}
+\DoxyCodeLine{37     \textcolor{keyword}{const} \textcolor{keywordtype}{string} \&getStations() \textcolor{keyword}{const};}
+\DoxyCodeLine{38     \textcolor{keyword}{const} \textcolor{keywordtype}{string} \&getNetwork() \textcolor{keyword}{const};}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \mbox{\hyperlink{class_graph}{Graph}} getG() \textcolor{keyword}{const};}
+\DoxyCodeLine{41     map<string, int> getNames() \textcolor{keyword}{const};}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \textcolor{keywordtype}{void} setG(\mbox{\hyperlink{class_graph}{Graph}} g);}
+\DoxyCodeLine{44     \textcolor{comment}{// \string~Data();}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46      \textcolor{keywordtype}{bool} readStations(\textcolor{keywordtype}{string} filename);}
+\DoxyCodeLine{47      \textcolor{keywordtype}{bool} readNetwork(\textcolor{keywordtype}{string} filename);}
+\DoxyCodeLine{48      \textcolor{keywordtype}{void} \mbox{\hyperlink{class_data_a86af764b75dec4e1f4a6c3feb95be462}{findTrainSources}}();}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50      \textcolor{comment}{//T2.1}}
+\DoxyCodeLine{51      \textcolor{keywordtype}{double} \mbox{\hyperlink{class_data_a1f95944159b682907fbdacf6a463ed9c}{getMaxFlow}}(queue<int> source, \textcolor{keywordtype}{int} target);}
+\DoxyCodeLine{52      \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_data_a2946ffd8c51cb255c2445054b1953e37}{path}}(queue<int> source, \textcolor{keywordtype}{int} target);}
+\DoxyCodeLine{53      \textcolor{keywordtype}{double} \mbox{\hyperlink{class_data_a43687d0be323c070daa1ab0a0cec8b82}{findBottleneck}}(\textcolor{keywordtype}{int} target);}
+\DoxyCodeLine{54      \textcolor{keywordtype}{void} \mbox{\hyperlink{class_data_a43e41fe234d8090ff14abd5158815eb7}{augmentPath}}(\textcolor{keywordtype}{int} target, \textcolor{keywordtype}{double} bottleneck);}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56      \textcolor{comment}{//T2.2}}
+\DoxyCodeLine{57      pair<vector<pair<Station*,Station*>>,\textcolor{keywordtype}{double}> \mbox{\hyperlink{class_data_ab4c972ef5068a772996d970b34c1511d}{stationPairs}}();}
+\DoxyCodeLine{58      \textcolor{comment}{//T2.3}}
+\DoxyCodeLine{59      vector<pair<string, double>> \mbox{\hyperlink{class_data_a7f245c3bfa84edc47d59c630facdb461}{topMunicipalities}}();}
+\DoxyCodeLine{60      vector<pair<string, double>> \mbox{\hyperlink{class_data_a3f415d4baea1f12f3729288106b43b17}{topDistricts}}();}
+\DoxyCodeLine{61      \textcolor{comment}{//T2.4}}
+\DoxyCodeLine{62      \textcolor{keywordtype}{double} \mbox{\hyperlink{class_data_a7ecfa64823deeeedded37d4d92a19f30}{nrTrainsArriving}}(\textcolor{keywordtype}{int} target);}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64      \textcolor{comment}{//T3.1}}
+\DoxyCodeLine{65      pair<double,double> \mbox{\hyperlink{class_data_a11b78ae7ff6cdb40c1d48fc5813849b0}{maxTrainsCost}}(\textcolor{keywordtype}{int} source, \textcolor{keywordtype}{int} target);}
+\DoxyCodeLine{66      \textcolor{keywordtype}{void} \mbox{\hyperlink{class_data_aa8c00318cf0da681c67617c62d08acf9}{cheapestPath}}(\textcolor{keywordtype}{int} source);}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68      \textcolor{comment}{//T4.1}}
+\DoxyCodeLine{69     \textcolor{keywordtype}{double} \mbox{\hyperlink{class_data_a2b9ec0b47e7ed229dde7fd5c7181c1d0}{getMaxFlowSub}}(queue<int> source, \textcolor{keywordtype}{int} target);}
+\DoxyCodeLine{70     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_data_a19415227ad096755264b46313b1593e0}{pathSub}}(queue<int> source, \textcolor{keywordtype}{int} target);}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72     \textcolor{comment}{//T4.2}}
+\DoxyCodeLine{73     vector<Result> \mbox{\hyperlink{class_data_a8b1efd5ec9af15efd865d5ab36223ca1}{topAffected}}(\textcolor{keywordtype}{int} k);}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75 \};}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//DA\_PROJECT1\_DATA\_H}}
+
+\end{DoxyCode}

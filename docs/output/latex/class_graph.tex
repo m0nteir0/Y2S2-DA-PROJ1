@@ -1,0 +1,81 @@
+\hypertarget{class_graph}{}\doxysection{Graph Class Reference}
+\label{class_graph}\index{Graph@{Graph}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_graph_a089f7fc73ea9976295d387846ad36c69}\label{class_graph_a089f7fc73ea9976295d387846ad36c69}} 
+\mbox{\hyperlink{class_vertex}{Vertex}} $\ast$ {\bfseries find\+Vertex} (const int \&id) const
+\item 
+\mbox{\Hypertarget{class_graph_ad354c018724ef3f137a0b8554089105e}\label{class_graph_ad354c018724ef3f137a0b8554089105e}} 
+bool {\bfseries add\+Vertex} (const int \&id)
+\item 
+\mbox{\Hypertarget{class_graph_a59a5e666d2b7dc025704d7e6bce95c01}\label{class_graph_a59a5e666d2b7dc025704d7e6bce95c01}} 
+bool {\bfseries add\+Vertex} (\mbox{\hyperlink{class_vertex}{Vertex}} $\ast$v)
+\item 
+\mbox{\Hypertarget{class_graph_a516f4487d70f4b15e413447afa8c2310}\label{class_graph_a516f4487d70f4b15e413447afa8c2310}} 
+bool {\bfseries add\+Edge} (const int \&sourc, const int \&dest, double w)
+\item 
+\mbox{\Hypertarget{class_graph_a3d12784188e7ae799b79de7d04d7ded9}\label{class_graph_a3d12784188e7ae799b79de7d04d7ded9}} 
+bool {\bfseries add\+Edge} (\mbox{\hyperlink{class_vertex}{Vertex}} $\ast$v1, \mbox{\hyperlink{class_vertex}{Vertex}} $\ast$v2, double w, string service)
+\item 
+\mbox{\Hypertarget{class_graph_a5d6b6b10ebe49cc0191ab45151cd49e7}\label{class_graph_a5d6b6b10ebe49cc0191ab45151cd49e7}} 
+bool {\bfseries add\+Bidirectional\+Edge} (const int \&sourc, const int \&dest, double w)
+\item 
+\mbox{\Hypertarget{class_graph_a29f3d1830c5417ebd3b8456cce22930d}\label{class_graph_a29f3d1830c5417ebd3b8456cce22930d}} 
+bool {\bfseries add\+Bidirectional\+Edge} (\mbox{\hyperlink{class_vertex}{Vertex}} $\ast$v1, \mbox{\hyperlink{class_vertex}{Vertex}} $\ast$v2, double w, string service)
+\item 
+void \mbox{\hyperlink{class_graph_a6bc74aa1eeb050547d12c69ee053884f}{disable\+Stations}} (vector$<$ int $>$ stations)
+\item 
+void \mbox{\hyperlink{class_graph_a7d1174de5a08468a27cb18cd653588bb}{disable\+Lines}} (vector$<$ pair$<$ int, int $>$ $>$ lines)
+\item 
+void \mbox{\hyperlink{class_graph_a7aff855481b22b1d9df1327f550037ea}{reset\+Lines}} ()
+\item 
+\mbox{\Hypertarget{class_graph_abb5e0517e2979c54eebdafc2a9875e8f}\label{class_graph_abb5e0517e2979c54eebdafc2a9875e8f}} 
+int {\bfseries get\+Num\+Vertex} () const
+\item 
+\mbox{\Hypertarget{class_graph_a619ac583094079134074658e29463c0e}\label{class_graph_a619ac583094079134074658e29463c0e}} 
+std\+::vector$<$ \mbox{\hyperlink{class_vertex}{Vertex}} $\ast$ $>$ {\bfseries get\+Vertex\+Set} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_graph_aa9b0a6d8ad43c5eabaca5a7140bcc8b6}\label{class_graph_aa9b0a6d8ad43c5eabaca5a7140bcc8b6}} 
+std\+::vector$<$ \mbox{\hyperlink{class_vertex}{Vertex}} $\ast$ $>$ {\bfseries vertex\+Set}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_graph_a7d1174de5a08468a27cb18cd653588bb}\label{class_graph_a7d1174de5a08468a27cb18cd653588bb}} 
+\index{Graph@{Graph}!disableLines@{disableLines}}
+\index{disableLines@{disableLines}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{disableLines()}{disableLines()}}
+{\footnotesize\ttfamily void Graph\+::disable\+Lines (\begin{DoxyParamCaption}\item[{vector$<$ pair$<$ int, int $>$ $>$}]{lines }\end{DoxyParamCaption})}
+
+Desativa os segmentos fornecidos, através do seu parâmetro \textquotesingle{}available\textquotesingle{}. COMPLEXIDADE\+: O(V+E), onde V corresponde ao número de vértices do grafo e E ao número de edges 
+\begin{DoxyParams}{Parameters}
+{\em lines} & vetor de pares de inteiros, que correspondem aos ids das estações que formam o segmento de linha a desativar \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_graph_a6bc74aa1eeb050547d12c69ee053884f}\label{class_graph_a6bc74aa1eeb050547d12c69ee053884f}} 
+\index{Graph@{Graph}!disableStations@{disableStations}}
+\index{disableStations@{disableStations}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{disableStations()}{disableStations()}}
+{\footnotesize\ttfamily void Graph\+::disable\+Stations (\begin{DoxyParamCaption}\item[{vector$<$ int $>$}]{stations }\end{DoxyParamCaption})}
+
+Desativa as estações fornecidas (e consequentemente os segmentos que têm ligação a essas estações), através do parâmetro \textquotesingle{}available\textquotesingle{} das Edges. COMPLEXIDADE\+: O(V+E), onde V corresponde ao número de vértices do grafo e E ao número de edges 
+\begin{DoxyParams}{Parameters}
+{\em stations} & vetor de números inteiros que coorespondem aos ids das estações a desativar \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_graph_a7aff855481b22b1d9df1327f550037ea}\label{class_graph_a7aff855481b22b1d9df1327f550037ea}} 
+\index{Graph@{Graph}!resetLines@{resetLines}}
+\index{resetLines@{resetLines}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{resetLines()}{resetLines()}}
+{\footnotesize\ttfamily void Graph\+::reset\+Lines (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Dá reset à todas as linhas do grafo, reativando-\/as. COMPLEXIDADE\+: O(\+V$\ast$\+E) 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+User/\+Desktop/\+DA-\/\+PROJECT1/Graph.\+h\item 
+C\+:/\+Users/\+User/\+Desktop/\+DA-\/\+PROJECT1/Graph.\+cpp\end{DoxyCompactItemize}

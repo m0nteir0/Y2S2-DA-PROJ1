@@ -1,0 +1,242 @@
+\hypertarget{class_data}{}\doxysection{Data Class Reference}
+\label{class_data}\index{Data@{Data}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_data_a5e1d5b0f17ae5523f5cd3ffedc3673f1}\label{class_data_a5e1d5b0f17ae5523f5cd3ffedc3673f1}} 
+const string \& {\bfseries get\+Stations} () const
+\item 
+\mbox{\Hypertarget{class_data_a0f4096f9d9fc6fcac8fef033c333e097}\label{class_data_a0f4096f9d9fc6fcac8fef033c333e097}} 
+const string \& {\bfseries get\+Network} () const
+\item 
+\mbox{\Hypertarget{class_data_abfba19294e3f60b684e332d315da8914}\label{class_data_abfba19294e3f60b684e332d315da8914}} 
+\mbox{\hyperlink{class_graph}{Graph}} {\bfseries getG} () const
+\item 
+\mbox{\Hypertarget{class_data_ac2cffdc7a946455bf93bb9f90825a777}\label{class_data_ac2cffdc7a946455bf93bb9f90825a777}} 
+map$<$ string, int $>$ {\bfseries get\+Names} () const
+\item 
+\mbox{\Hypertarget{class_data_a39cdffde97551560fe8e105a6efb972f}\label{class_data_a39cdffde97551560fe8e105a6efb972f}} 
+void {\bfseries setG} (\mbox{\hyperlink{class_graph}{Graph}} g)
+\item 
+\mbox{\Hypertarget{class_data_ac4052391d850f0c913e5123d0c455cf2}\label{class_data_ac4052391d850f0c913e5123d0c455cf2}} 
+bool {\bfseries read\+Stations} (string filename)
+\item 
+\mbox{\Hypertarget{class_data_a70fdc0031096eced1f3883a2afeff79a}\label{class_data_a70fdc0031096eced1f3883a2afeff79a}} 
+bool {\bfseries read\+Network} (string filename)
+\item 
+void \mbox{\hyperlink{class_data_a86af764b75dec4e1f4a6c3feb95be462}{find\+Train\+Sources}} ()
+\item 
+double \mbox{\hyperlink{class_data_a1f95944159b682907fbdacf6a463ed9c}{get\+Max\+Flow}} (queue$<$ int $>$ source, int target)
+\item 
+bool \mbox{\hyperlink{class_data_a2946ffd8c51cb255c2445054b1953e37}{path}} (queue$<$ int $>$ source, int target)
+\item 
+double \mbox{\hyperlink{class_data_a43687d0be323c070daa1ab0a0cec8b82}{find\+Bottleneck}} (int target)
+\item 
+void \mbox{\hyperlink{class_data_a43e41fe234d8090ff14abd5158815eb7}{augment\+Path}} (int target, double bottleneck)
+\item 
+pair$<$ vector$<$ pair$<$ \mbox{\hyperlink{class_station}{Station}} $\ast$, \mbox{\hyperlink{class_station}{Station}} $\ast$ $>$ $>$, double $>$ \mbox{\hyperlink{class_data_ab4c972ef5068a772996d970b34c1511d}{station\+Pairs}} ()
+\item 
+vector$<$ pair$<$ string, double $>$ $>$ \mbox{\hyperlink{class_data_a7f245c3bfa84edc47d59c630facdb461}{top\+Municipalities}} ()
+\item 
+vector$<$ pair$<$ string, double $>$ $>$ \mbox{\hyperlink{class_data_a3f415d4baea1f12f3729288106b43b17}{top\+Districts}} ()
+\item 
+double \mbox{\hyperlink{class_data_a7ecfa64823deeeedded37d4d92a19f30}{nr\+Trains\+Arriving}} (int target)
+\item 
+pair$<$ double, double $>$ \mbox{\hyperlink{class_data_a11b78ae7ff6cdb40c1d48fc5813849b0}{max\+Trains\+Cost}} (int source, int target)
+\item 
+void \mbox{\hyperlink{class_data_aa8c00318cf0da681c67617c62d08acf9}{cheapest\+Path}} (int source)
+\item 
+double \mbox{\hyperlink{class_data_a2b9ec0b47e7ed229dde7fd5c7181c1d0}{get\+Max\+Flow\+Sub}} (queue$<$ int $>$ source, int target)
+\item 
+bool \mbox{\hyperlink{class_data_a19415227ad096755264b46313b1593e0}{path\+Sub}} (queue$<$ int $>$ source, int target)
+\item 
+vector$<$ \mbox{\hyperlink{struct_result}{Result}} $>$ \mbox{\hyperlink{class_data_a8b1efd5ec9af15efd865d5ab36223ca1}{top\+Affected}} (int k)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_data_a43e41fe234d8090ff14abd5158815eb7}\label{class_data_a43e41fe234d8090ff14abd5158815eb7}} 
+\index{Data@{Data}!augmentPath@{augmentPath}}
+\index{augmentPath@{augmentPath}!Data@{Data}}
+\doxysubsubsection{\texorpdfstring{augmentPath()}{augmentPath()}}
+{\footnotesize\ttfamily void Data\+::augment\+Path (\begin{DoxyParamCaption}\item[{int}]{target,  }\item[{double}]{bottleneck }\end{DoxyParamCaption})}
+
+Altera o flow das edges, ou seja, o numero de comboios que podem atravessar nas linhas, tendo em consideração a bottleneck. COMPLEXIDADE\+: O(\+V), onde V corresponde ao número de vértices do grafo 
+\begin{DoxyParams}{Parameters}
+{\em target} & id do vértice de destino (relacionado com uma dada estação) \\
+\hline
+{\em bottleneck} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_data_aa8c00318cf0da681c67617c62d08acf9}\label{class_data_aa8c00318cf0da681c67617c62d08acf9}} 
+\index{Data@{Data}!cheapestPath@{cheapestPath}}
+\index{cheapestPath@{cheapestPath}!Data@{Data}}
+\doxysubsubsection{\texorpdfstring{cheapestPath()}{cheapestPath()}}
+{\footnotesize\ttfamily void Data\+::cheapest\+Path (\begin{DoxyParamCaption}\item[{int}]{source }\end{DoxyParamCaption})}
+
+Calcula as distâncias de uma estação de partida (\textquotesingle{}source\textquotesingle{}) até todas as outras estações, tendo como base o algoritmo de Djikstra, para atribuir as distâncias e os preços das viagens, tendo em conta se o serviço é \textquotesingle{}Standard\textquotesingle{} ou \textquotesingle{}Alfa\textquotesingle{}. COMPLEXIDADE\+: O((V + E)$\ast$log(V)), onde V corresponde ao número de vértices do grafo e E ao número de edges 
+\begin{DoxyParams}{Parameters}
+{\em source} & id do vértice de partida (relacionado com uma dada estação) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_data_a43687d0be323c070daa1ab0a0cec8b82}\label{class_data_a43687d0be323c070daa1ab0a0cec8b82}} 
+\index{Data@{Data}!findBottleneck@{findBottleneck}}
+\index{findBottleneck@{findBottleneck}!Data@{Data}}
+\doxysubsubsection{\texorpdfstring{findBottleneck()}{findBottleneck()}}
+{\footnotesize\ttfamily double Data\+::find\+Bottleneck (\begin{DoxyParamCaption}\item[{int}]{target }\end{DoxyParamCaption})}
+
+Retorna o \textquotesingle{}bottleneck\textquotesingle{} do percurso, ou seja, o flow máximo (numero máximo de comboios) que podem atravessar o percurso, tendo em conta a capacidade minima de todas as capacidades dos edges do percurso. COMPLEXIDADE\+: O(\+V), onde V corresponde ao número de vértices do grafo 
+\begin{DoxyParams}{Parameters}
+{\em target} & id do vértice de destino (relacionado com uma dada estação) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+valor double correspondente ao bottleneck, número maximo de comboios que podem atravessar o dado percurso 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_data_a86af764b75dec4e1f4a6c3feb95be462}\label{class_data_a86af764b75dec4e1f4a6c3feb95be462}} 
+\index{Data@{Data}!findTrainSources@{findTrainSources}}
+\index{findTrainSources@{findTrainSources}!Data@{Data}}
+\doxysubsubsection{\texorpdfstring{findTrainSources()}{findTrainSources()}}
+{\footnotesize\ttfamily void Data\+::find\+Train\+Sources (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Determina as estações da rede ferroviária que são fontes de comboios, neste caso, são os \textquotesingle{}extremos\textquotesingle{} das linhas e as estações onde há cruzamento de linhas. Acrescenta-\/as à queue \textquotesingle{}train\+Sources\textquotesingle{} da objeto do tipo \mbox{\hyperlink{class_data}{Data}}. COMPLEXIDADE\+: O(V+E), , onde V corresponde ao número de vértices do grafo e E ao número de edges Determina as estações da rede ferroviária que são fontes de comboios, neste caso, são os \textquotesingle{}extremos\textquotesingle{} das linhas. Acrescenta-\/as ao vetor \textquotesingle{}train\+Sources\textquotesingle{} da objeto do tipo \mbox{\hyperlink{class_data}{Data}}. \mbox{\Hypertarget{class_data_a1f95944159b682907fbdacf6a463ed9c}\label{class_data_a1f95944159b682907fbdacf6a463ed9c}} 
+\index{Data@{Data}!getMaxFlow@{getMaxFlow}}
+\index{getMaxFlow@{getMaxFlow}!Data@{Data}}
+\doxysubsubsection{\texorpdfstring{getMaxFlow()}{getMaxFlow()}}
+{\footnotesize\ttfamily double Data\+::get\+Max\+Flow (\begin{DoxyParamCaption}\item[{queue$<$ int $>$}]{source,  }\item[{int}]{target }\end{DoxyParamCaption})}
+
+Retorna o flow máximo (ou seja, número máximo de comboios) que podem atravessar o percurso de \textquotesingle{}source\textquotesingle{} até \textquotesingle{}target\textquotesingle{} (argumentos fornecidos). COMPLEXIDADE\+: O(\+V$\ast$\+E$^\wedge$2), onde V corresponde ao número de vértices do grafo e E ao número de edges 
+\begin{DoxyParams}{Parameters}
+{\em source} & id do vértice de partida (relacionado com uma dada estação) \\
+\hline
+{\em target} & id do vértice de destino (relacionado com uma dada estação) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+valor double correspondente ao numero maximo de comboios que podem atravessar o dado percurso 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_data_a2b9ec0b47e7ed229dde7fd5c7181c1d0}\label{class_data_a2b9ec0b47e7ed229dde7fd5c7181c1d0}} 
+\index{Data@{Data}!getMaxFlowSub@{getMaxFlowSub}}
+\index{getMaxFlowSub@{getMaxFlowSub}!Data@{Data}}
+\doxysubsubsection{\texorpdfstring{getMaxFlowSub()}{getMaxFlowSub()}}
+{\footnotesize\ttfamily double Data\+::get\+Max\+Flow\+Sub (\begin{DoxyParamCaption}\item[{queue$<$ int $>$}]{source,  }\item[{int}]{target }\end{DoxyParamCaption})}
+
+Calcula o número máximo de comboios que podem viajar simultaneamente entre duas estações específicas numa rede de conectividade reduzida, ou seja, num subgrafo da rede ferroviária original. COMPLEXIDADE\+: O(\+V$\ast$\+E$^\wedge$2), onde V corresponde ao número de vértices do grafo e E ao número de edges 
+\begin{DoxyParams}{Parameters}
+{\em source} & id do vértice de partida (relacionado com uma dada estação) \\
+\hline
+{\em target} & id do vértice de destino (relacionado com uma dada estação) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+valor double correspondende ao numero maximo de comboios que podem viajar simultaneamente entre as duas estações fornecidas na rede de comectividade reduzida 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_data_a11b78ae7ff6cdb40c1d48fc5813849b0}\label{class_data_a11b78ae7ff6cdb40c1d48fc5813849b0}} 
+\index{Data@{Data}!maxTrainsCost@{maxTrainsCost}}
+\index{maxTrainsCost@{maxTrainsCost}!Data@{Data}}
+\doxysubsubsection{\texorpdfstring{maxTrainsCost()}{maxTrainsCost()}}
+{\footnotesize\ttfamily pair$<$ double, double $>$ Data\+::max\+Trains\+Cost (\begin{DoxyParamCaption}\item[{int}]{source,  }\item[{int}]{target }\end{DoxyParamCaption})}
+
+Calcula o número máximo de comboios que podem viajar simultaneamente entre duas estações específicas com o custo mínimo. COMPLEXIDADE\+: O((V + E)$\ast$log(V)), onde V corresponde ao número de vértices do grafo e E ao número de edges 
+\begin{DoxyParams}{Parameters}
+{\em source} & id do vértice de partida (relacionado com uma dada estação) \\
+\hline
+{\em target} & id do vértice de destino (relacionado com uma dada estação) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+par de valores double correspondentes ao \textquotesingle{}bottleneck\textquotesingle{} (numero maximo de comboios que pode atravessar o percurso) e custo, respetivamente 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_data_a7ecfa64823deeeedded37d4d92a19f30}\label{class_data_a7ecfa64823deeeedded37d4d92a19f30}} 
+\index{Data@{Data}!nrTrainsArriving@{nrTrainsArriving}}
+\index{nrTrainsArriving@{nrTrainsArriving}!Data@{Data}}
+\doxysubsubsection{\texorpdfstring{nrTrainsArriving()}{nrTrainsArriving()}}
+{\footnotesize\ttfamily double Data\+::nr\+Trains\+Arriving (\begin{DoxyParamCaption}\item[{int}]{target }\end{DoxyParamCaption})}
+
+Indica o número máximo de comboios que podem chegar simultaneamente a uma dada estação, tendo em consideração toda a rede ferroviária. COMPLEXIDADE\+: O(\+V$\ast$\+E$^\wedge$2), onde V corresponde ao número de vértices do grafo e E ao número de edges 
+\begin{DoxyParams}{Parameters}
+{\em target} & valor inteiro correspondente ao ID da estação a considerar como destino \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+valor double correspondente ao número máximo de comboios que podem chegar simultaneamente à estação fornecida 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_data_a2946ffd8c51cb255c2445054b1953e37}\label{class_data_a2946ffd8c51cb255c2445054b1953e37}} 
+\index{Data@{Data}!path@{path}}
+\index{path@{path}!Data@{Data}}
+\doxysubsubsection{\texorpdfstring{path()}{path()}}
+{\footnotesize\ttfamily bool Data\+::path (\begin{DoxyParamCaption}\item[{queue$<$ int $>$}]{s,  }\item[{int}]{target }\end{DoxyParamCaption})}
+
+Retorna verdadeiro ou falso, consoante a existencia de um percurso até ao vertex de id \textquotesingle{}target\textquotesingle{} (estação de destino) a partir das estações de partida. Caso exista, define esse caminho através do parâmetro \textquotesingle{}path\textquotesingle{} dos vértices do grafo. COMPLEXIDADE\+: O(V + E), onde V corresponde ao número de vértices do grafo e E ao número de edges 
+\begin{DoxyParams}{Parameters}
+{\em s} & queue de valores inteiros que correspondem aos ids das estações de partida \\
+\hline
+{\em target} & id do vértice de destino (relacionado com uma dada estação) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+valor booleano correspondente à existencia de um percurso até ao vertex de id \textquotesingle{}target\textquotesingle{} (estação de destino) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_data_a19415227ad096755264b46313b1593e0}\label{class_data_a19415227ad096755264b46313b1593e0}} 
+\index{Data@{Data}!pathSub@{pathSub}}
+\index{pathSub@{pathSub}!Data@{Data}}
+\doxysubsubsection{\texorpdfstring{pathSub()}{pathSub()}}
+{\footnotesize\ttfamily bool Data\+::path\+Sub (\begin{DoxyParamCaption}\item[{queue$<$ int $>$}]{s,  }\item[{int}]{target }\end{DoxyParamCaption})}
+
+Retorna verdadeiro ou falso, consoante a existencia de um percurso até ao vertex de id \textquotesingle{}target\textquotesingle{} (estação de destino) a partir das estações de partida, rede de conectividade reduzida, ou seja, num subgrafo da rede ferroviária original. Caso exista, define esse caminho através do parâmetro \textquotesingle{}path\textquotesingle{} dos vértices do grafo. COMPLEXIDADE\+: O(V + E), onde V corresponde ao número de vértices do grafo e E ao número de edges 
+\begin{DoxyParams}{Parameters}
+{\em s} & queue de valores inteiros que correspondem aos ids das estações de partida \\
+\hline
+{\em target} & id do vértice de destino (relacionado com uma dada estação) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+valor booleano correspondente à existencia de um percurso até ao vertex de id \textquotesingle{}target\textquotesingle{} (estação de destino) na rede de comectividade reduzida 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_data_ab4c972ef5068a772996d970b34c1511d}\label{class_data_ab4c972ef5068a772996d970b34c1511d}} 
+\index{Data@{Data}!stationPairs@{stationPairs}}
+\index{stationPairs@{stationPairs}!Data@{Data}}
+\doxysubsubsection{\texorpdfstring{stationPairs()}{stationPairs()}}
+{\footnotesize\ttfamily pair$<$ vector$<$ pair$<$ \mbox{\hyperlink{class_station}{Station}} $\ast$, \mbox{\hyperlink{class_station}{Station}} $\ast$ $>$ $>$, double $>$ Data\+::station\+Pairs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Determina, de todos os pares de estações, qual(ais) requer(em) maior numero de comboios, tendo em conta a capacidade de toda a rede. COMPLEXIDADE\+: O((V$^\wedge$2) $\ast$ (V$\ast$\+E$^\wedge$2)), onde V corresponde ao número de vértices do grafo e E ao número de edges \begin{DoxyReturn}{Returns}
+par de vetores de pares de estações que requerem o valor maximo de toda a rede 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_data_a8b1efd5ec9af15efd865d5ab36223ca1}\label{class_data_a8b1efd5ec9af15efd865d5ab36223ca1}} 
+\index{Data@{Data}!topAffected@{topAffected}}
+\index{topAffected@{topAffected}!Data@{Data}}
+\doxysubsubsection{\texorpdfstring{topAffected()}{topAffected()}}
+{\footnotesize\ttfamily vector$<$ \mbox{\hyperlink{struct_result}{Result}} $>$ Data\+::top\+Affected (\begin{DoxyParamCaption}\item[{int}]{k }\end{DoxyParamCaption})}
+
+Determina as top K estações mais afetadas por falhas nos segmentos da rede ferroviária. COMPLEXIDADE\+: O((V$^\wedge$2)$\ast$(E$^\wedge$2)), onde V corresponde ao número de vértices do grafo e E ao número de edges 
+\begin{DoxyParams}{Parameters}
+{\em k} & valor inteiro que determina o número de estações listadas \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+vetor de objetos \mbox{\hyperlink{struct_result}{Result}} correspondentes às top estações mais afetadas 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_data_a3f415d4baea1f12f3729288106b43b17}\label{class_data_a3f415d4baea1f12f3729288106b43b17}} 
+\index{Data@{Data}!topDistricts@{topDistricts}}
+\index{topDistricts@{topDistricts}!Data@{Data}}
+\doxysubsubsection{\texorpdfstring{topDistricts()}{topDistricts()}}
+{\footnotesize\ttfamily vector$<$ pair$<$ string, double $>$ $>$ Data\+::top\+Districts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Indica onde se deve atribuir maiores orçamentos para a compra e manutenção de comboios e lista os distritos mais relevantes, em relação às suas necessidades de transporte. COMPLEXIDADE\+: O(D $\ast$ (V$^\wedge$2) $\ast$ (V$\ast$\+E$^\wedge$2)), onde V corresponde ao número de vértices do grafo, E ao número de edges e D ao número de distritos \begin{DoxyReturn}{Returns}
+vetor de pares de string (nomes dos distritos) e double (media de comboios que passa em cada estação do distrito) com maior necessidade 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_data_a7f245c3bfa84edc47d59c630facdb461}\label{class_data_a7f245c3bfa84edc47d59c630facdb461}} 
+\index{Data@{Data}!topMunicipalities@{topMunicipalities}}
+\index{topMunicipalities@{topMunicipalities}!Data@{Data}}
+\doxysubsubsection{\texorpdfstring{topMunicipalities()}{topMunicipalities()}}
+{\footnotesize\ttfamily vector$<$ pair$<$ string, double $>$ $>$ Data\+::top\+Municipalities (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Indica onde se deve atribuir maiores orçamentos para a compra e manutenção de comboios e lista os municípios mais relevantes, em relação às suas necessidades de transporte. COMPLEXIDADE\+: O(M $\ast$ (V$^\wedge$2) $\ast$ (V$\ast$\+E$^\wedge$2)), onde V corresponde ao número de vértices do grafo, E ao número de edges e M ao número de municípios \begin{DoxyReturn}{Returns}
+vetor de pares de string (nomes dos municípios) e double (media de comboios que passa em cada estação do município) com maior necessidade 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+User/\+Desktop/\+DA-\/\+PROJECT1/Data.\+h\item 
+C\+:/\+Users/\+User/\+Desktop/\+DA-\/\+PROJECT1/Data.\+cpp\end{DoxyCompactItemize}
